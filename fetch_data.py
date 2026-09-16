@@ -1,31 +1,43 @@
 """
-Fetch the 20 brightest stars in the constellation Libra from SIMBAD
-and store the results locally as a CSV.
+Fetch the 20 brightest stars (with measured parallax) for each of the 12
+zodiac constellations from SIMBAD, and store them all in one CSV tagged by
+constellation.
 
+Install dependencies first:
+    pip install astroquery astropy pandas
+
+Usage:
+    python fetch_zodiac_data.py
 """
 
-import astropy.units as u
 import pandas as pd
+import astropy.units as u
 from astropy.coordinates import SkyCoord, get_constellation
 from astroquery.simbad import Simbad
 
-CSV_PATH = "libra_stars.csv"
+CSV_PATH = "zodiac_top20_stars.csv"
+CANDIDATE_LIMIT = 500  # candidates pulled per constellation before filtering/ranking
 
-# Generous RA/Dec bounding box that comfortably contains all of Libra.
-# We over-fetch here and then filter precisely with get_constellation().
-RA_MIN, RA_MAX = 213.0, 240.0    # degrees
-DEC_MIN, DEC_MAX = -30.0, -5.0   # degrees
+# Generous RA/Dec bounding boxes per zodiac constellation (a superset of the
+# true boundary; get_constellation() below does the precise filtering).
+# (name, iau_short_code, ra_min, ra_max, dec_min, dec_max) in degrees.
+ZODIAC_BOXES = [
+    ("Aries",       "Ari", 24.0,  54.0,   9.0,  32.0),
+    ("Taurus",      "Tau", 48.0,  91.0,  -1.0,  32.0),
+    ("Gemini",      "Gem", 87.0, 123.0,   9.0,  36.0),
+    ("Cancer",      "Cnc", 117.0,141.0,   6.0,  34.0),
+    ("Leo",         "Leo", 139.0,178.0,  -1.0,  34.0),
+    ("Virgo",       "Vir", 169.0,226.0, -23.0,  15.0),
+    ("Libra",       "Lib", 213.0,240.0, -30.0,  -5.0),
+    ("Scorpius",    "Sco", 231.0,271.0, -47.0,  -7.0),
+    ("Sagittarius", "Sgr", 264.0,307.0, -47.0, -10.0),
+    ("Capricornus", "Cap", 299.0,330.0, -29.0,  -7.0),
+    ("Aquarius",    "Aqr", 308.0,360.0, -27.0,   4.0),
+    ("Pisces",      "Psc", 340.0,360.0,  -7.0,  34.0),  # note: Pisces also wraps past 0h RA; see caveat below
+]
 
-# How many candidate stars to pull before filtering/sorting. Increase if
-# you get fewer than 20 results back after the constellation filter.
-CANDIDATE_LIMIT = 500
 
-
-def fetch_candidates() -> pd.DataFrame:
-    """Query SIMBAD's TAP service directly with ADQL for point sources in
-    the Libra bounding box, pulling coordinates, parallax, proper motion,
-    radial velocity, B/V magnitudes, and spectral type. Only stars with a
-    measured parallax are included."""
+def fetch_candidates(ra_min, ra_max, dec_min, dec_max):
     query = f"""
     SELECT TOP {CANDIDATE_LIMIT}
            basic.main_id, basic.ra, basic.dec, basic.otype,
@@ -40,46 +52,43 @@ def fetch_candidates() -> pd.DataFrame:
     LEFT JOIN flux AS fluxb ON fluxb.oidref = basic.oid AND fluxb.filter = 'B'
     WHERE basic.otype = 'Star'
       AND basic.plx_value IS NOT NULL
-      AND basic.ra BETWEEN {RA_MIN} AND {RA_MAX}
-      AND basic.dec BETWEEN {DEC_MIN} AND {DEC_MAX}
+      AND basic.ra BETWEEN {ra_min} AND {ra_max}
+      AND basic.dec BETWEEN {dec_min} AND {dec_max}
     ORDER BY vmag ASC
     """
     result = Simbad.query_tap(query)
     return result.to_pandas()
 
 
-def filter_to_libra(df: pd.DataFrame) -> pd.DataFrame:
-    """Keep only rows whose coordinates actually fall inside the Libra
-    constellation boundary (the bounding box above is a superset)."""
+def filter_to_constellation(df, short_code):
     coords = SkyCoord(ra=df["ra"].values * u.deg, dec=df["dec"].values * u.deg)
     df = df.copy()
-    df["constellation"] = get_constellation(coords, short_name=True)
-    return df[df["constellation"] == "Lib"].copy()
+    df["constellation_code"] = get_constellation(coords, short_name=True)
+    return df[df["constellation_code"] == short_code].copy()
 
 
 def main():
-    print("Querying SIMBAD for candidate stars near Libra...")
-    df = fetch_candidates()
-    print(f"  {len(df)} candidates returned")
+    all_top20 = []
 
-    print("Filtering to confirmed Libra members...")
-    df = filter_to_libra(df)
-    print(f"  {len(df)} confirmed Libra stars")
+    for name, code, ra_min, ra_max, dec_min, dec_max in ZODIAC_BOXES:
+        print(f"Querying {name}...")
+        df = fetch_candidates(ra_min, ra_max, dec_min, dec_max)
+        df = filter_to_constellation(df, code)
+        print(f"  {len(df)} confirmed {name} stars with parallax")
 
-    if len(df) < 20:
-        print("Warning: fewer than 20 stars found. Try raising CANDIDATE_LIMIT.")
+        if len(df) < 20:
+            print(f"  Warning: fewer than 20 stars found for {name}. "
+                  f"Try raising CANDIDATE_LIMIT or widening its box.")
 
-    top20 = df.sort_values("vmag").head(20).reset_index(drop=True)
-    top20.index = top20.index + 1
-    top20.index.name = "rank"
+        top20 = df.sort_values("vmag").head(20).reset_index(drop=True)
+        top20.insert(0, "constellation", name)
+        top20.index = top20.index + 1
+        top20.index.name = "rank"
+        all_top20.append(top20)
 
-    top20.to_csv(CSV_PATH)
-    print(f"Saved CSV -> {CSV_PATH}")
-
-    print("\nTop 20 brightest stars in Libra:")
-    cols = ["main_id", "ra", "dec", "plx_value", "pmra", "pmdec",
-            "rvz_radvel", "bmag", "vmag", "sp_type"]
-    print(top20[cols].to_string())
+    combined = pd.concat(all_top20)
+    combined.to_csv(CSV_PATH)
+    print(f"\nSaved {len(combined)} rows ({len(ZODIAC_BOXES)} constellations x ~20) -> {CSV_PATH}")
 
 
 if __name__ == "__main__":

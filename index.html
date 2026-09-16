@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Libra: A Stellar Survey</title>
+<title id="page-title">The Zodiac: A Stellar Survey</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -99,6 +99,48 @@
     height: 1px;
     background: var(--ink-gold-dim);
     margin: 32px auto 0;
+  }
+
+  /* ---------- Constellation nav ---------- */
+
+  .const-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 28px;
+  }
+
+  .const-nav-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--ink-gold-dim);
+    background: var(--bg-panel-alt);
+    color: var(--ink-gold);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  .const-nav-btn:hover {
+    background: rgba(201, 162, 75, 0.16);
+  }
+
+  .const-nav-btn:active {
+    transform: scale(0.94);
+  }
+
+  .const-nav-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text-faint);
+    letter-spacing: 0.04em;
+    min-width: 110px;
+    text-align: center;
   }
 
   /* ---------- Section headings ---------- */
@@ -432,16 +474,22 @@
     </svg>
 
     <div class="eyebrow">A Photometric &amp; Astrometric Survey</div>
-    <h1>The Scales of <em>Libra</em></h1>
-    <p class="hero-sub">
+    <h1 id="hero-title">The Scales of <em>Libra</em></h1>
+    <p class="hero-sub" id="hero-sub">
       The twenty brightest stars of the constellation Libra, catalogued from SIMBAD
       and examined in light of Herschel's early work on stellar motion.
     </p>
     <div class="hero-rule"></div>
+
+    <div class="const-nav">
+      <button id="const-prev" class="const-nav-btn" aria-label="Previous constellation" title="Previous constellation">&#8592;</button>
+      <div class="const-nav-label" id="const-nav-label">7 / 12 &middot; LIBRA</div>
+      <button id="const-next" class="const-nav-btn" aria-label="Next constellation" title="Next constellation">&#8594;</button>
+    </div>
   </header>
 
-  <!-- ===================== HERSCHEL SUMMARY ===================== -->
-  <section class="herschel">
+  <!-- ===================== HERSCHEL SUMMARY (Libra only) ===================== -->
+  <section class="herschel" id="herschel-section">
     <div class="prose">
       <div class="section-label">Background</div>
       <h2>Herschel's Contribution</h2>
@@ -474,7 +522,7 @@
   <!-- ===================== DATA TABLE ===================== -->
   <section class="catalog">
     <div class="section-label">The Data</div>
-    <h2>Catalog of the Twenty Brightest Stars</h2>
+    <h2 id="catalog-title">Catalog of the Twenty Brightest Stars</h2>
 
     <div class="table-scroll">
       <table>
@@ -500,7 +548,8 @@
     </div>
     <p class="table-note">
       Data queried from the SIMBAD astronomical database. Parallax filtered to
-      require a measured value; radial velocities marked <span class="na">&ndash;</span> are unmeasured for that star.
+      require a measured value; radial velocities or spectral types marked
+      <span class="na">&ndash;</span> are unmeasured for that star.
     </p>
   </section>
 
@@ -508,7 +557,7 @@
   <section class="timeslider">
     <div class="section-label">Time</div>
     <div class="prose">
-      <h2>Watch Libra Drift</h2>
+      <h2>Watch the Sky Drift</h2>
       <p>
         Every star above carries a measured proper motion — its true sideways
         drift across the sky — and a measured radial velocity, its speed
@@ -517,10 +566,11 @@
         slowly change together. The control docked at the bottom of the page
         drives the sky map above, the reference panel, the distance chart,
         and the 3D view below, all together — it stays with you as you
-        scroll. Range: 300,000 years ago (roughly the emergence of Homo
-        sapiens) to 1,000,000 years from now. Linear extrapolation over such
-        vast spans is a standard illustrative simplification — real stellar
-        paths curve under gravity long before a million years pass.
+        scroll, and resets to "Now" whenever you switch constellations.
+        Range: 300,000 years ago (roughly the emergence of Homo sapiens) to
+        1,000,000 years from now. Linear extrapolation over such vast spans
+        is a standard illustrative simplification — real stellar paths curve
+        under gravity long before a million years pass.
       </p>
     </div>
   </section>
@@ -572,12 +622,11 @@
         <g id="ref-stars"></g>
       </svg>
     </div>
-
-
     <p class="table-note">
       Horizontal position: true distance, computed as 1000 &divide; parallax (mas), shown to scale
       in parsecs (upper ticks) and light-years (lower ticks). Vertical position: actual
-      declination of each star. Hover a star for exact values.
+      declination of each star. Hover a star for exact values; hovering either panel highlights
+      the same star in both.
     </p>
   </section>
 
@@ -585,7 +634,7 @@
   <section class="viewer3d">
     <div class="section-label">Spatial Reconstruction</div>
     <div class="prose">
-      <h2>Libra in Three Dimensions</h2>
+      <h2 id="viewer3d-title">Libra in Three Dimensions</h2>
       <p style="margin-bottom: 32px;">
         Combining right ascension, declination, and parallax-derived distance
         gives each star's true position in space. The view here is centered on
@@ -617,35 +666,29 @@
 </div>
 
 <script>
-  // Star data (from libra_stars.csv)
-  const STARS = [{"rank": "1", "main_id": "* ups Lib", "ra": "234.25603706873625", "dec": "-28.135110461468887", "otype": "*", "plx_value": "15.5267", "pmra": "-16.261", "pmdec": "11.711", "rvz_radvel": "-24.9", "rvz_type": "v", "sp_type": "K3.5III", "bmag": "4.979", "vmag": "3.589", "constellation": "Lib"}, {"rank": "2", "main_id": "*  42 Lib", "ra": "235.0704055109", "dec": "-23.81808364893", "otype": "*", "plx_value": "8.2082", "pmra": "-16.044", "pmdec": "-16.111", "rvz_radvel": "-21.8", "rvz_type": "v", "sp_type": "K3-IIICN2", "bmag": "6.29", "vmag": "4.96", "constellation": "Lib"}, {"rank": "3", "main_id": "*  36 Lib", "ra": "233.65549239999", "dec": "-28.047020260619995", "otype": "*", "plx_value": "9.3849", "pmra": "10.755", "pmdec": "-32.18", "rvz_radvel": "22.11", "rvz_type": "v", "sp_type": "K2/3III", "bmag": "6.437", "vmag": "5.138", "constellation": "Lib"}, {"rank": "4", "main_id": "* nu. Lib", "ra": "226.65665213046998", "dec": "-16.256818608409997", "otype": "*", "plx_value": "5.1772", "pmra": "-36.821", "pmdec": "-23.247", "rvz_radvel": "-15.69", "rvz_type": "v", "sp_type": "K5-III", "bmag": "6.78", "vmag": "5.2", "constellation": "Lib"}, {"rank": "5", "main_id": "*  12 Lib", "ra": "223.58386910138", "dec": "-24.642204268810005", "otype": "*", "plx_value": "8.1903", "pmra": "-10.786", "pmdec": "-28.376", "rvz_radvel": "8.8", "rvz_type": "v", "sp_type": "K2/3III", "bmag": "6.612", "vmag": "5.266", "constellation": "Lib"}, {"rank": "6", "main_id": "* ksi02 Lib", "ra": "224.19214600515997", "dec": "-11.409700030229999", "otype": "*", "plx_value": "4.4918", "pmra": "8.851", "pmdec": "9.815", "rvz_radvel": "14.6", "rvz_type": "v", "sp_type": "K4III", "bmag": "6.946", "vmag": "5.45", "constellation": "Lib"}, {"rank": "7", "main_id": "* zet04 Lib", "ra": "233.23008856487002", "dec": "-16.85284478365", "otype": "*", "plx_value": "4.3321", "pmra": "-12.879", "pmdec": "-11.282", "rvz_radvel": "1.8", "rvz_type": "v", "sp_type": "B3V", "bmag": "5.355", "vmag": "5.499", "constellation": "Lib"}, {"rank": "8", "main_id": "HD 135534", "ra": "229.09587775037", "dec": "-22.39941430414", "otype": "*", "plx_value": "7.898", "pmra": "-35.031", "pmdec": "2.798", "rvz_radvel": "-5.3", "rvz_type": "v", "sp_type": "K2III", "bmag": "6.877", "vmag": "5.506", "constellation": "Lib"}, {"rank": "9", "main_id": "HD 138413", "ra": "233.15292103366", "dec": "-19.670458435149996", "otype": "*", "plx_value": "13.6252", "pmra": "-19.475", "pmdec": "-38.831", "rvz_radvel": "-32.52", "rvz_type": "v", "sp_type": "A2IV", "bmag": "5.7", "vmag": "5.52", "constellation": "Lib"}, {"rank": "10", "main_id": "* zet01 Lib", "ra": "232.06420082374", "dec": "-16.71648542046", "otype": "*", "plx_value": "5.0526", "pmra": "16.299", "pmdec": "-33.679", "rvz_radvel": "-21.4", "rvz_type": "v", "sp_type": "K4.5III", "bmag": "7.161", "vmag": "5.626", "constellation": "Lib"}, {"rank": "11", "main_id": "HD 130529", "ra": "222.32810034521998", "dec": "-24.251469126499998", "otype": "*", "plx_value": "3.112", "pmra": "-22.596", "pmdec": "0.073", "rvz_radvel": "-26.3", "rvz_type": "v", "sp_type": "K3III+G", "bmag": "6.972", "vmag": "5.692", "constellation": "Lib"}, {"rank": "12", "main_id": "* zet03 Lib", "ra": "232.66833885525", "dec": "-16.60946242113", "otype": "*", "plx_value": "6.5635", "pmra": "22.636", "pmdec": "-1.766", "rvz_radvel": "-1.7", "rvz_type": "v", "sp_type": "K0III", "bmag": "6.858", "vmag": "5.806", "constellation": "Lib"}, {"rank": "13", "main_id": "HD 135051", "ra": "228.47213692450998", "dec": "-26.193574089600002", "otype": "*", "plx_value": "3.5792", "pmra": "-13.427", "pmdec": "-6.286", "rvz_radvel": "-28.3", "rvz_type": "v", "sp_type": "G8/K0II", "bmag": "6.998", "vmag": "5.857", "constellation": "Lib"}, {"rank": "14", "main_id": "HD 130157", "ra": "221.80687493926376", "dec": "-21.324873423929716", "otype": "*", "plx_value": "2.5995", "pmra": "-12.522", "pmdec": "1.444", "rvz_radvel": "-24.16", "rvz_type": "v", "sp_type": "K4/5III", "bmag": "7.677", "vmag": "6.034", "constellation": "Lib"}, {"rank": "15", "main_id": "* omi Lib", "ra": "230.25578898389", "dec": "-15.548351532910003", "otype": "*", "plx_value": "17.5623", "pmra": "20.404", "pmdec": "29.818", "rvz_radvel": "8.82", "rvz_type": "v", "sp_type": "F2V", "bmag": "6.513", "vmag": "6.143", "constellation": "Lib"}, {"rank": "16", "main_id": "*  26 Lib", "ra": "228.64065780017998", "dec": "-17.76857144771", "otype": "*", "plx_value": "3.9825", "pmra": "-16.223", "pmdec": "-15.26", "rvz_radvel": "-25.9", "rvz_type": "v", "sp_type": "B9III", "bmag": "6.156", "vmag": "6.172", "constellation": "Lib"}, {"rank": "17", "main_id": "HD 138105", "ra": "232.65104577188998", "dec": "-20.728552952349997", "otype": "*", "plx_value": "14.2724", "pmra": "5.277", "pmdec": "-29.067", "rvz_radvel": "-10.9", "rvz_type": "v", "sp_type": "A3V", "bmag": "6.371", "vmag": "6.194", "constellation": "Lib"}, {"rank": "18", "main_id": "HD 141853", "ra": "237.90998054918998", "dec": "-14.13358612059", "otype": "*", "plx_value": "4.454", "pmra": "-22.361", "pmdec": "-7.603", "rvz_radvel": "-16.0", "rvz_type": "v", "sp_type": "G8III", "bmag": "7.211", "vmag": "6.207", "constellation": "Lib"}, {"rank": "19", "main_id": "HD 140986", "ra": "236.68926767852997", "dec": "-6.120356990670001", "otype": "*", "plx_value": "4.5624", "pmra": "-11.687", "pmdec": "0.062", "rvz_radvel": "-51.86", "rvz_type": "v", "sp_type": "K0III", "bmag": "7.41", "vmag": "6.245", "constellation": "Lib"}, {"rank": "20", "main_id": "*  10 Lib", "ra": "222.96377559740998", "dec": "-18.35532683924", "otype": "*", "plx_value": "3.0579", "pmra": "-12.774", "pmdec": "-2.188", "rvz_radvel": "-21.9", "rvz_type": "v", "sp_type": "K0II/III", "bmag": "7.37", "vmag": "6.26", "constellation": "Lib"}];
+  const svgNS = "http://www.w3.org/2000/svg";
 
-  function fmt(val, digits) {
-    if (val === null || val === undefined || val === "" || isNaN(parseFloat(val))) {
-      return '<span class="na">&ndash;</span>';
-    }
-    return parseFloat(val).toFixed(digits);
-  }
+  // ============================================================
+  // 1. DATA — one dataset per zodiac constellation
+  // ============================================================
+  const ZODIAC = {"order":["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpius","Sagittarius","Capricornus","Aquarius","Pisces"],"data":{"Aries":{"stars":[{"name":"HD  20644","ra0":50.08484196336125,"dec0":29.04845766232917,"pmra":-7.017,"pmdec":-16.032,"dist_pc":198.62,"plx":5.0347,"rv":-3.09,"vmag":4.47,"bmag":6.02,"sp_type":"K3IIIaBa0.5","r":5.5,"op":1.0,"color":"#ffd2a1"},{"name":"eps Ari A","ra0":44.80302418005,"dec0":21.340427382609995,"pmra":-15.884,"pmdec":-7.151,"dist_pc":110.75,"plx":9.0296,"rv":-7.9,"vmag":5.16,"bmag":5.21,"sp_type":"A2IV","r":4.17,"op":0.77,"color":"#cad7ff"},{"name":"nu. Ari","ra0":39.7041351977,"dec0":21.96140205441,"pmra":-4.203,"pmdec":-15.103,"dist_pc":82.69,"plx":12.0933,"rv":8.0,"vmag":5.45,"bmag":5.608,"sp_type":"A7V","r":3.61,"op":0.67,"color":"#cad7ff"},{"name":"sig Ari","ra0":42.87327685698,"dec0":15.08206763306,"pmra":29.636,"pmdec":-24.65,"dist_pc":141.81,"plx":7.0519,"rv":17.0,"vmag":5.52,"bmag":5.411,"sp_type":"B7V","r":3.48,"op":0.65,"color":"#aabfff"},{"name":"62 Ari","ra0":50.5495559739,"dec0":27.60755427903,"pmra":5.939,"pmdec":-14.386,"dist_pc":213.13,"plx":4.692,"rv":9.5,"vmag":5.52,"bmag":6.62,"sp_type":"G5III","r":3.48,"op":0.64,"color":"#fff4ea"},{"name":"tet Ari","ra0":34.53137754778,"dec0":19.90115760898,"pmra":-7.832,"pmdec":-3.654,"dist_pc":138.47,"plx":7.222,"rv":11.95,"vmag":5.57,"bmag":5.58,"sp_type":"A1Vn","r":3.38,"op":0.63,"color":"#cad7ff"},{"name":"HD  20149","ra0":48.83516564975,"dec0":30.55668928183,"pmra":-15.207,"pmdec":2.559,"dist_pc":147.82,"plx":6.7649,"rv":-11.8,"vmag":5.61,"bmag":5.62,"sp_type":"A1Vs","r":3.3,"op":0.61,"color":"#cad7ff"},{"name":"omi Ari","ra0":41.13738310626,"dec0":15.31185986918,"pmra":2.942,"pmdec":-16.236,"dist_pc":172.81,"plx":5.7867,"rv":18.01,"vmag":5.78,"bmag":5.75,"sp_type":"B9Vn","r":2.98,"op":0.56,"color":"#aabfff"},{"name":"49 Ari","ra0":45.47558852883999,"dec0":26.46235404216999,"pmra":-14.323,"pmdec":5.16,"dist_pc":68.22,"plx":14.6587,"rv":-1.41,"vmag":5.91,"bmag":6.054,"sp_type":"kA2hA6mA7","r":2.73,"op":0.51,"color":"#ffd2a1"},{"name":"HD  12479","ra0":30.646154213200003,"dec0":13.47672089669,"pmra":-2.056,"pmdec":-3.413,"dist_pc":214.84,"plx":4.6547,"rv":-7.14,"vmag":5.94,"bmag":7.53,"sp_type":"M2III","r":2.67,"op":0.5,"color":"#ffcc6f"},{"name":"HD  13522","ra0":33.15641592691,"dec0":24.16778082147,"pmra":43.114,"pmdec":-5.029,"dist_pc":173.17,"plx":5.7748,"rv":-2.22,"vmag":5.95,"bmag":7.34,"sp_type":"K0","r":2.65,"op":0.5,"color":"#ffd2a1"},{"name":"HD  19698","ra0":47.66163808722,"dec0":11.87261848001,"pmra":33.202,"pmdec":-23.128,"dist_pc":134.81,"plx":7.4179,"rv":16.02,"vmag":5.97,"bmag":5.901,"sp_type":"B8V","r":2.61,"op":0.49,"color":"#aabfff"},{"name":"16 Ari","ra0":32.80022860206001,"dec0":25.93694226499,"pmra":-8.211,"pmdec":-4.866,"dist_pc":156.4,"plx":6.394,"rv":-15.1,"vmag":6.0,"bmag":7.376,"sp_type":"K4III","r":2.55,"op":0.48,"color":"#ffd2a1"},{"name":"11 Ari","ra0":31.70514540556,"dec0":25.70455630048,"pmra":18.232,"pmdec":-13.092,"dist_pc":252.95,"plx":3.9534,"rv":-13.8,"vmag":6.02,"bmag":5.98,"sp_type":"B9IV-Vn","r":2.51,"op":0.48,"color":"#aabfff"},{"name":"65 Ari","ra0":51.10881548237,"dec0":20.803490456380004,"pmra":0.883,"pmdec":-9.424,"dist_pc":103.29,"plx":9.6813,"rv":-6.2,"vmag":6.06,"bmag":6.033,"sp_type":"A1V","r":2.43,"op":0.46,"color":"#cad7ff"},{"name":"HD  12140","ra0":29.85784759583001,"dec0":12.294880311540002,"pmra":4.189,"pmdec":-39.666,"dist_pc":95.56,"plx":10.4648,"rv":-12.0,"vmag":6.08,"bmag":6.277,"sp_type":"A6V","r":2.41,"op":0.46,"color":"#cad7ff"},{"name":"1 Ari A","ra0":27.535712547319168,"dec0":22.27533610681611,"pmra":-14.896,"pmdec":-7.666,"dist_pc":185.23,"plx":5.3986,"rv":7.02,"vmag":6.2,"bmag":7.34,"sp_type":"K0III+","r":2.17,"op":0.41,"color":"#ffd2a1"},{"name":"HD  12594","ra0":30.927543807069995,"dec0":18.25325535064,"pmra":-7.386,"pmdec":-21.382,"dist_pc":230.41,"plx":4.3401,"rv":10.13,"vmag":6.21,"bmag":7.649,"sp_type":"K4III","r":2.14,"op":0.41,"color":"#ffd2a1"},{"name":"54 Ari","ra0":47.08795462078,"dec0":18.79505228404,"pmra":37.941,"pmdec":-14.278,"dist_pc":222.69,"plx":4.4906,"rv":44.32,"vmag":6.25,"bmag":7.84,"sp_type":"M0III","r":2.07,"op":0.4,"color":"#ffcc6f"},{"name":"HD  16955","ra0":40.96351494488001,"dec0":25.63834723477,"pmra":-5.889,"pmdec":5.982,"dist_pc":108.03,"plx":9.2563,"rv":-10.3,"vmag":6.39,"bmag":6.46,"sp_type":"A3V","r":1.8,"op":0.35,"color":"#cad7ff"}],"ra_min":27.535713,"ra_max":51.108815,"dec_min":11.872618,"dec_max":30.556689,"domain_pc":273.183,"centroid":{"x":5.5868,"y":4.5866,"z":2.8659},"cam_dist":16.22},"Taurus":{"stars":[{"name":"nu. Tau","ra0":60.78907977626709,"dec0":5.989300702002499,"pmra":5.192,"pmdec":-3.873,"dist_pc":37.84,"plx":26.4293,"rv":-3.58,"vmag":3.88,"bmag":3.924,"sp_type":"A0.5Va","r":5.5,"op":1.0,"color":"#cad7ff"},{"name":"mu. Tau","ra0":63.88357525019291,"dec0":8.892355084943333,"pmra":19.77,"pmdec":-21.918,"dist_pc":155.13,"plx":6.4463,"rv":16.3,"vmag":4.28,"bmag":4.205,"sp_type":"B3IV","r":4.64,"op":0.85,"color":"#aabfff"},{"name":"pi. Tau","ra0":66.65154769028,"dec0":14.7137818582,"pmra":-8.802,"pmdec":-30.335,"dist_pc":124.37,"plx":8.0403,"rv":31.27,"vmag":4.69,"bmag":5.67,"sp_type":"G7IIIFe-0.5","r":3.74,"op":0.69,"color":"#fff4ea"},{"name":"o Tau","ra0":81.90868401411792,"dec0":21.936968078639445,"pmra":4.104,"pmdec":-7.699,"dist_pc":185.29,"plx":5.3969,"rv":16.5,"vmag":4.87,"bmag":4.719,"sp_type":"B2.5V","r":3.35,"op":0.62,"color":"#aabfff"},{"name":"134 Tau","ra0":87.38720972302957,"dec0":12.651322412640832,"pmra":-21.764,"pmdec":-18.546,"dist_pc":86.22,"plx":11.5984,"rv":19.71,"vmag":4.88,"bmag":4.811,"sp_type":"B9V","r":3.34,"op":0.62,"color":"#aabfff"},{"name":"47 Tau A","ra0":63.48493935442001,"dec0":9.263824264009996,"pmra":-9.823,"pmdec":-30.085,"dist_pc":125.59,"plx":7.9622,"rv":-7.98,"vmag":4.95,"bmag":5.84,"sp_type":"G3IIIFe-0.5","r":3.18,"op":0.59,"color":"#fff4ea"},{"name":"s Tau","ra0":52.60195333272333,"dec0":11.336439403954722,"pmra":-13.134,"pmdec":-16.446,"dist_pc":114.32,"plx":8.747,"rv":-3.6,"vmag":5.12,"bmag":5.09,"sp_type":"A0Vn","r":2.8,"op":0.53,"color":"#cad7ff"},{"name":"HD  26793","ra0":63.6509691962,"dec0":10.01140720061,"pmra":-9.289,"pmdec":-12.989,"dist_pc":130.17,"plx":7.6822,"rv":7.0,"vmag":5.22,"bmag":5.118,"sp_type":"B9Vn","r":2.59,"op":0.49,"color":"#aabfff"},{"name":"133 Tau","ra0":86.92878099876,"dec0":13.89959609388,"pmra":4.96,"pmdec":-11.489,"dist_pc":289.03,"plx":3.4599,"rv":26.2,"vmag":5.29,"bmag":5.12,"sp_type":"B2IV-V","r":2.44,"op":0.46,"color":"#aabfff"},{"name":"49 Eri","ra0":69.306981981275,"dec0":0.9983278096394442,"pmra":-3.69,"pmdec":-6.457,"dist_pc":142.25,"plx":7.03,"rv":24.0,"vmag":5.32,"bmag":5.193,"sp_type":"B8IV","r":2.38,"op":0.45,"color":"#aabfff"},{"name":"chi Tau","ra0":65.64559882087,"dec0":25.62931599318,"pmra":20.802,"pmdec":-17.039,"dist_pc":89.26,"plx":11.2029,"rv":13.99,"vmag":5.38,"bmag":5.344,"sp_type":"B9Vnn","r":2.24,"op":0.43,"color":"#aabfff"},{"name":"121 Tau","ra0":83.86304857929709,"dec0":24.03959602108222,"pmra":11.629,"pmdec":-17.6,"dist_pc":197.01,"plx":5.0758,"rv":23.0,"vmag":5.38,"bmag":5.29,"sp_type":"B2.5IV","r":2.24,"op":0.43,"color":"#aabfff"},{"name":"130 Tau","ra0":86.85914823325,"dec0":17.72914224062,"pmra":-3.0,"pmdec":-4.339,"dist_pc":346.62,"plx":2.885,"rv":9.0,"vmag":5.46,"bmag":5.759,"sp_type":"F0III","r":2.08,"op":0.4,"color":"#f8f7ff"},{"name":"16 Tau","ra0":56.20089556751999,"dec0":24.28946759207,"pmra":19.849,"pmdec":-44.966,"dist_pc":135.41,"plx":7.3852,"rv":16.49,"vmag":5.46,"bmag":5.42,"sp_type":"B7V","r":2.07,"op":0.4,"color":"#aabfff"},{"name":"HD  31539","ra0":74.34310357125,"dec0":17.15366618407,"pmra":-13.089,"pmdec":0.046,"dist_pc":145.55,"plx":6.8706,"rv":26.63,"vmag":5.49,"bmag":6.801,"sp_type":"K1III","r":2.0,"op":0.39,"color":"#ffd2a1"},{"name":"116 Tau","ra0":81.94003372563,"dec0":15.874050497600004,"pmra":4.458,"pmdec":-21.757,"dist_pc":154.29,"plx":6.4814,"rv":16.0,"vmag":5.51,"bmag":5.522,"sp_type":"B9.5Vn","r":1.95,"op":0.38,"color":"#aabfff"},{"name":"135 Tau","ra0":87.62045167155,"dec0":14.3056071117,"pmra":8.707,"pmdec":-37.686,"dist_pc":86.41,"plx":11.5734,"rv":45.19,"vmag":5.52,"bmag":6.53,"sp_type":"G9III:","r":1.94,"op":0.37,"color":"#fff4ea"},{"name":"44 Eri","ra0":67.13383772729,"dec0":1.38082529384,"pmra":20.236,"pmdec":-20.406,"dist_pc":156.23,"plx":6.401,"rv":18.0,"vmag":5.53,"bmag":5.429,"sp_type":"B5III/IV","r":1.91,"op":0.37,"color":"#aabfff"},{"name":"12 Tau","ra0":54.96300806981,"dec0":3.05686614906,"pmra":-37.243,"pmdec":8.864,"dist_pc":104.53,"plx":9.567,"rv":24.31,"vmag":5.55,"bmag":6.483,"sp_type":"K0III","r":1.86,"op":0.36,"color":"#ffd2a1"},{"name":"HD  39004","ra0":87.74212581701,"dec0":27.96786198373,"pmra":-1.804,"pmdec":11.729,"dist_pc":117.33,"plx":8.5233,"rv":13.07,"vmag":5.58,"bmag":6.553,"sp_type":"G7III:","r":1.8,"op":0.35,"color":"#fff4ea"}],"ra_min":52.601953,"ra_max":87.742126,"dec_min":0.998328,"dec_max":27.967862,"domain_pc":374.35,"centroid":{"x":1.832,"y":6.6125,"z":1.8395},"cam_dist":33.58},"Gemini":{"stars":[{"name":"eps Gem","ra0":100.98302979662668,"dec0":25.131127192367774,"pmra":-4.853,"pmdec":-11.78,"dist_pc":266.83,"plx":3.7477,"rv":7.77,"vmag":2.98,"bmag":4.39,"sp_type":"G8Ib","r":5.5,"op":1.0,"color":"#fff4ea"},{"name":"phi Gem","ra0":118.37420066092,"dec0":26.765781406390005,"pmra":-27.843,"pmdec":-30.555,"dist_pc":55.44,"plx":18.038,"rv":8.0,"vmag":4.96,"bmag":5.06,"sp_type":"A5IV","r":2.99,"op":0.56,"color":"#cad7ff"},{"name":"HD  52960","ra0":105.90863284214,"dec0":10.95181764838,"pmra":-2.326,"pmdec":-11.402,"dist_pc":181.47,"plx":5.5106,"rv":19.79,"vmag":5.12,"bmag":6.512,"sp_type":"K3III","r":2.8,"op":0.52,"color":"#ffd2a1"},{"name":"pi. Gem","ra0":116.87634926849,"dec0":33.41569686352,"pmra":-17.48,"pmdec":-28.334,"dist_pc":180.03,"plx":5.5547,"rv":-13.36,"vmag":5.14,"bmag":6.74,"sp_type":"M0III","r":2.77,"op":0.52,"color":"#ffcc6f"},{"name":"d Gem","ra0":102.88769326208,"dec0":21.76114529117,"pmra":-5.719,"pmdec":-35.781,"dist_pc":131.31,"plx":7.6158,"rv":34.4,"vmag":5.26,"bmag":5.264,"sp_type":"A2V","r":2.62,"op":0.49,"color":"#cad7ff"},{"name":"c Gem","ra0":116.02881237863998,"dec0":25.7841601231,"pmra":-13.326,"pmdec":-20.079,"dist_pc":199.02,"plx":5.0247,"rv":1.33,"vmag":5.29,"bmag":6.829,"sp_type":"K4.5III","r":2.58,"op":0.49,"color":"#ffd2a1"},{"name":"85 Gem","ra0":118.91622686366,"dec0":19.88396700814,"pmra":-15.114,"pmdec":-39.83,"dist_pc":156.2,"plx":6.4022,"rv":12.3,"vmag":5.37,"bmag":5.329,"sp_type":"A0Vs","r":2.48,"op":0.47,"color":"#cad7ff"},{"name":"28 Gem","ra0":101.18941579111,"dec0":28.97093898152,"pmra":-8.358,"pmdec":-27.667,"dist_pc":180.41,"plx":5.5428,"rv":14.87,"vmag":5.44,"bmag":6.89,"sp_type":"K4III","r":2.39,"op":0.45,"color":"#ffd2a1"},{"name":"70 Gem","ra0":114.63693298529002,"dec0":35.0485498459,"pmra":38.492,"pmdec":27.757,"dist_pc":100.42,"plx":9.9583,"rv":-36.33,"vmag":5.57,"bmag":6.501,"sp_type":"G8III","r":2.22,"op":0.42,"color":"#fff4ea"},{"name":"87 Gem","ra0":102.99994238463,"dec0":23.60172198957,"pmra":-39.651,"pmdec":-8.859,"dist_pc":137.46,"plx":7.2748,"rv":33.29,"vmag":5.67,"bmag":7.142,"sp_type":"K5III","r":2.09,"op":0.4,"color":"#ffd2a1"},{"name":"35 Gem","ra0":102.60624439025,"dec0":13.41317871781,"pmra":-2.2,"pmdec":-6.421,"dist_pc":370.1,"plx":2.702,"rv":28.91,"vmag":5.67,"bmag":7.016,"sp_type":"K3III","r":2.09,"op":0.4,"color":"#ffd2a1"},{"name":"53 Gem","ra0":108.98819635530002,"dec0":27.897420977140005,"pmra":-12.384,"pmdec":-1.967,"dist_pc":245.2,"plx":4.0783,"rv":25.11,"vmag":5.71,"bmag":7.34,"sp_type":"M1III","r":2.05,"op":0.39,"color":"#ffcc6f"},{"name":"37 Gem","ra0":103.82777649493,"dec0":25.37569543139,"pmra":-37.595,"pmdec":24.234,"dist_pc":17.4,"plx":57.4559,"rv":-14.93,"vmag":5.75,"bmag":6.343,"sp_type":"G0V","r":2.0,"op":0.38,"color":"#fff4ea"},{"name":"HD  52556","ra0":105.57289166190002,"dec0":15.336009823110002,"pmra":5.594,"pmdec":-24.153,"dist_pc":181.49,"plx":5.51,"rv":-12.5,"vmag":5.75,"bmag":6.9,"sp_type":"K1III:","r":1.99,"op":0.38,"color":"#ffd2a1"},{"name":"47 Gem","ra0":107.84611384969,"dec0":26.85658899476,"pmra":-19.21,"pmdec":-33.061,"dist_pc":113.79,"plx":8.7883,"rv":42.13,"vmag":5.75,"bmag":5.86,"sp_type":"A4IV","r":1.99,"op":0.38,"color":"#cad7ff"},{"name":"59 Gem","ra0":111.13938800771,"dec0":27.63785597449,"pmra":13.722,"pmdec":15.078,"dist_pc":66.75,"plx":14.9819,"rv":-4.5,"vmag":5.76,"bmag":6.11,"sp_type":"F0:III:","r":1.98,"op":0.38,"color":"#f8f7ff"},{"name":"HD  61885","ra0":115.4660263063,"dec0":13.48045605686,"pmra":-36.611,"pmdec":-23.523,"dist_pc":255.08,"plx":3.9204,"rv":5.8,"vmag":5.8,"bmag":7.46,"sp_type":"M2III","r":1.93,"op":0.37,"color":"#ffcc6f"},{"name":"HD  52609","ra0":105.63869703626,"dec0":16.67444523645,"pmra":-11.716,"pmdec":-7.845,"dist_pc":525.82,"plx":1.9018,"rv":34.1,"vmag":5.85,"bmag":7.485,"sp_type":"M2III","r":1.87,"op":0.36,"color":"#ffcc6f"},{"name":"48 Gem","ra0":108.10990093406,"dec0":24.12859388949,"pmra":-17.952,"pmdec":-45.679,"dist_pc":108.63,"plx":9.2055,"rv":13.0,"vmag":5.85,"bmag":6.21,"sp_type":"F5III-IV","r":1.87,"op":0.36,"color":"#f8f7ff"},{"name":"HD  42049","ra0":92.38515413698,"dec0":22.19026500941,"pmra":-6.534,"pmdec":-3.877,"dist_pc":561.45,"plx":1.7811,"rv":7.8,"vmag":5.9,"bmag":7.545,"sp_type":"K4III","r":1.8,"op":0.35,"color":"#ffd2a1"}],"ra_min":92.385154,"ra_max":118.916227,"dec_min":10.951818,"dec_max":35.04855,"domain_pc":606.367,"centroid":{"x":-2.5089,"y":8.9035,"z":3.6639},"cam_dist":59.13},"Cancer":{"stars":[{"name":"HD  71115","ra0":126.47819608049,"dec0":7.56450404808,"pmra":-34.471,"pmdec":-10.119,"dist_pc":127.62,"plx":7.8357,"rv":15.91,"vmag":5.12,"bmag":6.051,"sp_type":"G6III-IIIaFe-1.5","r":5.5,"op":1.0,"color":"#fff4ea"},{"name":"rho02 Cnc","ra0":133.91533538552,"dec0":27.92748218113,"pmra":-13.014,"pmdec":-32.535,"dist_pc":179.47,"plx":5.5719,"rv":16.88,"vmag":5.22,"bmag":6.229,"sp_type":"G8III","r":5.1,"op":0.93,"color":"#fff4ea"},{"name":"pi.02 Cnc","ra0":138.80771713763,"dec0":14.941508884169998,"pmra":-41.018,"pmdec":-11.304,"dist_pc":175.84,"plx":5.6869,"rv":27.47,"vmag":5.35,"bmag":6.664,"sp_type":"K1III","r":4.62,"op":0.85,"color":"#ffd2a1"},{"name":"tau Cnc","ra0":137.00020890672,"dec0":29.6542321328,"pmra":-32.199,"pmdec":2.64,"dist_pc":83.09,"plx":12.0346,"rv":-13.94,"vmag":5.42,"bmag":6.316,"sp_type":"G8III","r":4.34,"op":0.8,"color":"#fff4ea"},{"name":"60 Cnc","ra0":133.9814460193,"dec0":11.626024724329998,"pmra":-15.525,"pmdec":-12.905,"dist_pc":276.31,"plx":3.6191,"rv":25.4,"vmag":5.44,"bmag":6.921,"sp_type":"K5III","r":4.26,"op":0.78,"color":"#ffd2a1"},{"name":"3 Cnc","ra0":120.19711479666998,"dec0":17.308700552619996,"pmra":-10.504,"pmdec":-3.489,"dist_pc":246.32,"plx":4.0598,"rv":40.67,"vmag":5.59,"bmag":6.904,"sp_type":"K3III","r":3.69,"op":0.68,"color":"#ffd2a1"},{"name":"sig01 Cnc","ra0":133.14425827925,"dec0":32.47415912243,"pmra":-5.598,"pmdec":15.832,"dist_pc":67.89,"plx":14.7289,"rv":-11.26,"vmag":5.66,"bmag":5.874,"sp_type":"A8Vam","r":3.39,"op":0.63,"color":"#cad7ff"},{"name":"HD  77445","ra0":135.68673582804,"dec0":7.29826767327,"pmra":-10.786,"pmdec":1.695,"dist_pc":172.54,"plx":5.7957,"rv":28.57,"vmag":5.83,"bmag":6.926,"sp_type":"K3III:","r":2.74,"op":0.51,"color":"#ffd2a1"},{"name":"ome Cnc","ra0":120.23280388714002,"dec0":25.39283738944,"pmra":16.663,"pmdec":7.197,"dist_pc":188.41,"plx":5.3076,"rv":1.9,"vmag":5.85,"bmag":6.881,"sp_type":"G8III","r":2.65,"op":0.5,"color":"#fff4ea"},{"name":"66 Cnc","ra0":135.35054075731,"dec0":32.2522960969,"pmra":0.723,"pmdec":0.276,"dist_pc":142.59,"plx":7.0133,"rv":-12.8,"vmag":5.87,"bmag":5.94,"sp_type":"A2V","r":2.59,"op":0.49,"color":"#cad7ff"},{"name":"c Cnc","ra0":129.27403693521,"dec0":9.655578089720002,"pmra":-28.308,"pmdec":-3.883,"dist_pc":149.72,"plx":6.6793,"rv":16.5,"vmag":5.91,"bmag":5.992,"sp_type":"A3V","r":2.43,"op":0.46,"color":"#cad7ff"},{"name":"lam Cnc","ra0":125.13390147397,"dec0":24.0223111489,"pmra":-20.843,"pmdec":-18.97,"dist_pc":174.33,"plx":5.7362,"rv":27.01,"vmag":5.93,"bmag":5.87,"sp_type":"B9.5V","r":2.35,"op":0.45,"color":"#aabfff"},{"name":"29 Cnc","ra0":127.15558131684,"dec0":14.21082424424,"pmra":-13.849,"pmdec":-12.252,"dist_pc":110.71,"plx":9.0325,"rv":6.81,"vmag":5.95,"bmag":6.136,"sp_type":"A5V","r":2.28,"op":0.43,"color":"#cad7ff"},{"name":"1 LMi","ra0":129.57908811702,"dec0":32.80201682758,"pmra":-24.186,"pmdec":-4.173,"dist_pc":118.28,"plx":8.4547,"rv":4.52,"vmag":5.95,"bmag":7.062,"sp_type":"K2III:","r":2.28,"op":0.43,"color":"#ffd2a1"},{"name":"57 Cnc A","ra0":133.56138342917,"dec0":30.57912066683,"pmra":41.205,"pmdec":-23.252,"dist_pc":115.68,"plx":8.6445,"rv":0.0,"vmag":5.97,"bmag":7.01,"sp_type":"","r":2.2,"op":0.42,"color":"#fff4ea"},{"name":"5 Cnc","ra0":120.37620137937,"dec0":16.455311034210002,"pmra":3.99,"pmdec":-5.338,"dist_pc":151.84,"plx":6.5859,"rv":-2.28,"vmag":5.99,"bmag":5.97,"sp_type":"B9.5Vn","r":2.12,"op":0.41,"color":"#aabfff"},{"name":"HD  65257","ra0":119.63112894975,"dec0":16.51868096195,"pmra":-7.926,"pmdec":-3.358,"dist_pc":521.65,"plx":1.917,"rv":17.99,"vmag":6.0,"bmag":7.509,"sp_type":"K0","r":2.07,"op":0.4,"color":"#ffd2a1"},{"name":"HD  72617","ra0":128.55560875229,"dec0":8.452306678210002,"pmra":1.198,"pmdec":-26.587,"dist_pc":63.34,"plx":15.7882,"rv":13.9,"vmag":6.03,"bmag":6.344,"sp_type":"F3IV","r":1.97,"op":0.38,"color":"#f8f7ff"},{"name":"HD  65522","ra0":119.89606453532,"dec0":13.242166351010004,"pmra":-19.917,"pmdec":-15.548,"dist_pc":107.29,"plx":9.3205,"rv":27.52,"vmag":6.07,"bmag":7.42,"sp_type":"K2","r":1.81,"op":0.35,"color":"#ffd2a1"},{"name":"HD  68099","ra0":122.81916215862,"dec0":9.82123526797,"pmra":-7.044,"pmdec":-16.253,"dist_pc":198.9,"plx":5.0276,"rv":30.0,"vmag":6.07,"bmag":5.956,"sp_type":"B6III","r":1.8,"op":0.35,"color":"#aabfff"}],"ra_min":119.631129,"ra_max":138.807717,"dec_min":7.298268,"dec_max":32.802017,"domain_pc":563.38,"centroid":{"x":-4.7632,"y":6.2791,"z":2.5921},"cam_dist":57.24},"Leo":{"stars":[{"name":"eps Leo","ra0":146.46280673687792,"dec0":23.77425377711222,"pmra":-46.154,"pmdec":-10.799,"dist_pc":69.74,"plx":14.3394,"rv":4.32,"vmag":2.98,"bmag":3.79,"sp_type":"G1IIIa","r":5.5,"op":1.0,"color":"#fff4ea"},{"name":"zet Leo","ra0":154.17256318434792,"dec0":23.417316988991107,"pmra":21.161,"pmdec":-8.263,"dist_pc":71.24,"plx":14.0377,"rv":-12.32,"vmag":3.41,"bmag":3.72,"sp_type":"F0IIIa","r":5.0,"op":0.91,"color":"#f8f7ff"},{"name":"ups Leo","ra0":174.23721152069376,"dec0":-0.8237499422280555,"pmra":1.696,"pmdec":43.142,"dist_pc":54.51,"plx":18.3461,"rv":1.57,"vmag":4.3,"bmag":5.31,"sp_type":"G9IIIbFe-0.5","r":3.97,"op":0.73,"color":"#fff4ea"},{"name":"lam Leo","ra0":142.93012390931915,"dec0":22.967981285818052,"pmra":-18.45,"pmdec":-36.303,"dist_pc":114.21,"plx":8.7555,"rv":24.27,"vmag":4.31,"bmag":5.85,"sp_type":"K4.5III","r":3.95,"op":0.73,"color":"#ffd2a1"},{"name":"pi. Leo","ra0":150.05335839433042,"dec0":8.044219645808056,"pmra":-32.181,"pmdec":-21.883,"dist_pc":145.96,"plx":6.8513,"rv":22.3,"vmag":4.7,"bmag":6.3,"sp_type":"M2-III","r":3.5,"op":0.65,"color":"#ffcc6f"},{"name":"tau Leo","ra0":171.98433134626,"dec0":2.85626503025,"pmra":16.851,"pmdec":-10.756,"dist_pc":163.74,"plx":6.1072,"rv":-8.82,"vmag":4.94,"bmag":5.94,"sp_type":"G8-IIIa","r":3.22,"op":0.6,"color":"#fff4ea"},{"name":"6 Leo","ra0":142.98990418519,"dec0":9.715765314789998,"pmra":-8.974,"pmdec":-12.737,"dist_pc":189.48,"plx":5.2776,"rv":18.55,"vmag":5.07,"bmag":6.44,"sp_type":"K2.5IIIFe-0.5","r":3.07,"op":0.57,"color":"#ffd2a1"},{"name":"l Leo","ra0":162.31429315093,"dec0":10.54519958042,"pmra":-3.569,"pmdec":-25.597,"dist_pc":108.82,"plx":9.1892,"rv":-6.8,"vmag":5.31,"bmag":5.338,"sp_type":"A2V","r":2.79,"op":0.52,"color":"#cad7ff"},{"name":"79 Leo","ra0":171.00969812875,"dec0":1.40776252577,"pmra":-16.268,"pmdec":-0.088,"dist_pc":114.11,"plx":8.7638,"rv":-9.87,"vmag":5.39,"bmag":6.326,"sp_type":"G8III-IIIb","r":2.7,"op":0.51,"color":"#fff4ea"},{"name":"p05 Leo","ra0":168.43980459464,"dec0":-0.06950222502,"pmra":-46.541,"pmdec":2.767,"dist_pc":159.74,"plx":6.2602,"rv":4.39,"vmag":5.4,"bmag":5.374,"sp_type":"A0V","r":2.68,"op":0.5,"color":"#cad7ff"},{"name":"37 Leo","ra0":154.16973994383,"dec0":13.72833441766,"pmra":-22.829,"pmdec":-14.784,"dist_pc":208.12,"plx":4.805,"rv":5.14,"vmag":5.41,"bmag":7.02,"sp_type":"M1III","r":2.68,"op":0.5,"color":"#ffcc6f"},{"name":"18 Leo","ra0":146.59719713332,"dec0":11.810043235640002,"pmra":-16.084,"pmdec":17.619,"dist_pc":224.21,"plx":4.4601,"rv":29.54,"vmag":5.64,"bmag":7.142,"sp_type":"K4III","r":2.4,"op":0.46,"color":"#ffd2a1"},{"name":"67 Leo","ra0":167.20453298926,"dec0":24.658493778870003,"pmra":3.298,"pmdec":-6.403,"dist_pc":135.66,"plx":7.3712,"rv":-5.6,"vmag":5.7,"bmag":5.755,"sp_type":"A0IV","r":2.34,"op":0.44,"color":"#cad7ff"},{"name":"3 Leo","ra0":142.12155855335,"dec0":8.18830556701,"pmra":-26.193,"pmdec":-32.383,"dist_pc":139.94,"plx":7.1461,"rv":17.77,"vmag":5.71,"bmag":6.753,"sp_type":"K0III","r":2.32,"op":0.44,"color":"#ffd2a1"},{"name":"8 Leo","ra0":144.26075652981,"dec0":16.43795181621,"pmra":-14.459,"pmdec":-3.358,"dist_pc":335.92,"plx":2.9769,"rv":6.41,"vmag":5.73,"bmag":6.95,"sp_type":"K1III","r":2.3,"op":0.44,"color":"#ffd2a1"},{"name":"HD  84542","ra0":146.54184663665,"dec0":6.70855639132,"pmra":3.518,"pmdec":-23.591,"dist_pc":310.8,"plx":3.2175,"rv":-1.1,"vmag":5.79,"bmag":7.43,"sp_type":"M1III","r":2.23,"op":0.43,"color":"#ffcc6f"},{"name":"HD 101980","ra0":176.05484720032,"dec0":25.21832094672,"pmra":-13.306,"pmdec":7.75,"dist_pc":340.08,"plx":2.9405,"rv":-0.91,"vmag":6.02,"bmag":7.59,"sp_type":"K5III","r":1.97,"op":0.38,"color":"#ffd2a1"},{"name":"HD  98960","ra0":170.82479476328,"dec0":0.13204547747,"pmra":-40.109,"pmdec":-9.457,"dist_pc":239.89,"plx":4.1685,"rv":22.59,"vmag":6.03,"bmag":7.504,"sp_type":"K3III","r":1.96,"op":0.38,"color":"#ffd2a1"},{"name":"11 Sex","ra0":149.53179337001956,"dec0":8.313977991235834,"pmra":16.147,"pmdec":-26.878,"dist_pc":196.46,"plx":5.09,"rv":-20.22,"vmag":6.03,"bmag":7.399,"sp_type":"K3III","r":1.95,"op":0.38,"color":"#ffd2a1"},{"name":"42 Leo","ra0":155.45959557043,"dec0":14.975773044549998,"pmra":-32.212,"pmdec":-11.414,"dist_pc":156.8,"plx":6.3776,"rv":8.7,"vmag":6.16,"bmag":6.16,"sp_type":"A1V","r":1.8,"op":0.35,"color":"#cad7ff"}],"ra_min":142.121559,"ra_max":176.054847,"dec_min":-0.82375,"dec_max":25.218321,"domain_pc":367.284,"centroid":{"x":-7.5511,"y":3.3071,"z":1.7521},"cam_dist":31.35},"Virgo":{"stars":[{"name":"tau Vir","ra0":210.41163979453543,"dec0":1.5445306078263883,"pmra":17.317,"pmdec":-21.594,"dist_pc":69.53,"plx":14.3831,"rv":-2.49,"vmag":4.24,"bmag":4.331,"sp_type":"A2IV/V","r":5.5,"op":1.0,"color":"#cad7ff"},{"name":"sig Vir","ra0":199.4011940336946,"dec0":5.469884092734167,"pmra":-9.081,"pmdec":12.946,"dist_pc":214.16,"plx":4.6693,"rv":-28.26,"vmag":4.8,"bmag":6.47,"sp_type":"M1III","r":4.32,"op":0.79,"color":"#ffcc6f"},{"name":"49 Vir","ra0":196.97422029653,"dec0":-10.740408704040002,"pmra":16.629,"pmdec":-10.192,"dist_pc":89.69,"plx":11.1498,"rv":-9.55,"vmag":5.15,"bmag":6.281,"sp_type":"K0.5IIIbFe-0.5","r":3.59,"op":0.66,"color":"#ffd2a1"},{"name":"HD 115478","ra0":199.31511643374,"dec0":13.675751874,"pmra":8.168,"pmdec":42.33,"dist_pc":93.87,"plx":10.6535,"rv":-24.39,"vmag":5.33,"bmag":6.63,"sp_type":"K3III","r":3.22,"op":0.6,"color":"#ffd2a1"},{"name":"b Vir","ra0":179.9871395801,"dec0":3.65520461694,"pmra":-18.883,"pmdec":-6.935,"dist_pc":92.05,"plx":10.8636,"rv":-2.5,"vmag":5.34,"bmag":5.346,"sp_type":"A0V","r":3.18,"op":0.59,"color":"#cad7ff"},{"name":"HD 124683","ra0":213.85035912729165,"dec0":-18.200690647766663,"pmra":-44.042,"pmdec":-11.91,"dist_pc":84.42,"plx":11.8452,"rv":-19.0,"vmag":5.53,"bmag":5.525,"sp_type":"A0V","r":2.79,"op":0.52,"color":"#cad7ff"},{"name":"83 Vir","ra0":206.12427845576,"dec0":-16.179072836130004,"pmra":12.522,"pmdec":-6.052,"dist_pc":264.76,"plx":3.777,"rv":2.13,"vmag":5.57,"bmag":6.35,"sp_type":"G0II:","r":2.72,"op":0.51,"color":"#fff4ea"},{"name":"6 Vir","ra0":178.76305190051,"dec0":8.44394211856,"pmra":-32.519,"pmdec":15.424,"dist_pc":51.83,"plx":19.2949,"rv":-8.72,"vmag":5.57,"bmag":6.511,"sp_type":"K0III:","r":2.72,"op":0.51,"color":"#ffd2a1"},{"name":"108 Vir","ra0":221.37585193216,"dec0":0.71727227856,"pmra":-38.907,"pmdec":-8.231,"dist_pc":172.08,"plx":5.8113,"rv":-26.17,"vmag":5.67,"bmag":5.656,"sp_type":"B9.5V","r":2.51,"op":0.48,"color":"#aabfff"},{"name":"HD 114256","ra0":197.30181149638,"dec0":10.02246777626,"pmra":20.916,"pmdec":-0.341,"dist_pc":102.13,"plx":9.7915,"rv":-0.38,"vmag":5.78,"bmag":6.816,"sp_type":"K0III","r":2.27,"op":0.43,"color":"#ffd2a1"},{"name":"65 Vir","ra0":200.8287229623,"dec0":-4.92442827448,"pmra":-19.96,"pmdec":-16.703,"dist_pc":246.51,"plx":4.0566,"rv":9.8,"vmag":5.86,"bmag":7.304,"sp_type":"K4III","r":2.11,"op":0.4,"color":"#ffd2a1"},{"name":"f Vir","ra0":189.19730917959,"dec0":-5.83190054517,"pmra":-27.992,"pmdec":-20.279,"dist_pc":71.08,"plx":14.0684,"rv":-7.03,"vmag":5.88,"bmag":5.94,"sp_type":"A3V","r":2.07,"op":0.4,"color":"#cad7ff"},{"name":"13 Vir","ra0":184.66798952647,"dec0":-0.78718431864,"pmra":33.554,"pmdec":-16.527,"dist_pc":114.98,"plx":8.6971,"rv":-8.81,"vmag":5.9,"bmag":6.049,"sp_type":"A5IV/V","r":2.03,"op":0.39,"color":"#cad7ff"},{"name":"92 Vir","ra0":209.11615310433,"dec0":1.05058052801,"pmra":-28.395,"pmdec":13.226,"dist_pc":87.92,"plx":11.3738,"rv":-16.73,"vmag":5.9,"bmag":6.117,"sp_type":"A5IV/V","r":2.03,"op":0.39,"color":"#cad7ff"},{"name":"HD 132525","ra0":224.84631460991,"dec0":4.56776059964,"pmra":1.679,"pmdec":-5.455,"dist_pc":198.46,"plx":5.0389,"rv":-13.49,"vmag":5.93,"bmag":7.53,"sp_type":"M2.5III","r":1.96,"op":0.38,"color":"#ffcc6f"},{"name":"50 Vir","ra0":197.43867172166,"dec0":-10.32933967666,"pmra":-13.517,"pmdec":-9.315,"dist_pc":206.05,"plx":4.8532,"rv":-7.3,"vmag":5.94,"bmag":7.436,"sp_type":"K4III","r":1.93,"op":0.37,"color":"#ffd2a1"},{"name":"HD 127167","ra0":217.4604902235,"dec0":0.8289308687500001,"pmra":13.972,"pmdec":7.936,"dist_pc":75.17,"plx":13.3027,"rv":-9.2,"vmag":5.97,"bmag":6.12,"sp_type":"A5IV/V","r":1.89,"op":0.37,"color":"#cad7ff"},{"name":"HD 106976","ra0":184.53988528484,"dec0":-3.94878072207,"pmra":-11.234,"pmdec":21.268,"dist_pc":57.19,"plx":17.4856,"rv":-1.11,"vmag":5.99,"bmag":6.34,"sp_type":"F1VkF2mF3","r":1.84,"op":0.36,"color":"#f8f7ff"},{"name":"37 Vir","ra0":192.90370679061,"dec0":3.05678672801,"pmra":-35.855,"pmdec":19.519,"dist_pc":161.53,"plx":6.1908,"rv":0.9,"vmag":6.0,"bmag":7.327,"sp_type":"K2III","r":1.81,"op":0.35,"color":"#ffd2a1"},{"name":"HD 127337","ra0":217.68912644864,"dec0":4.772285793670001,"pmra":3.316,"pmdec":-12.74,"dist_pc":209.91,"plx":4.7639,"rv":6.94,"vmag":6.01,"bmag":7.432,"sp_type":"K4III","r":1.8,"op":0.35,"color":"#ffd2a1"}],"ra_min":178.763052,"ra_max":224.846315,"dec_min":-18.200691,"dec_max":13.675752,"domain_pc":285.941,"centroid":{"x":-5.8956,"y":-2.5655,"z":-0.1631},"cam_dist":23.1},"Libra":{"stars":[{"name":"ups Lib","ra0":234.25603706873625,"dec0":-28.135110461468887,"pmra":-16.261,"pmdec":11.711,"dist_pc":64.41,"plx":15.5267,"rv":-24.9,"vmag":3.59,"bmag":4.979,"sp_type":"K3.5III","r":5.5,"op":1.0,"color":"#ffd2a1"},{"name":"42 Lib","ra0":235.0704055109,"dec0":-23.81808364893,"pmra":-16.044,"pmdec":-16.111,"dist_pc":121.83,"plx":8.2082,"rv":-21.8,"vmag":4.96,"bmag":6.29,"sp_type":"K3-IIICN2","r":3.6,"op":0.67,"color":"#ffd2a1"},{"name":"36 Lib","ra0":233.65549239999,"dec0":-28.047020260619995,"pmra":10.755,"pmdec":-32.18,"dist_pc":106.55,"plx":9.3849,"rv":22.11,"vmag":5.14,"bmag":6.437,"sp_type":"K2/3III","r":3.35,"op":0.62,"color":"#ffd2a1"},{"name":"nu. Lib","ra0":226.65665213047,"dec0":-16.256818608409997,"pmra":-36.821,"pmdec":-23.247,"dist_pc":193.15,"plx":5.1772,"rv":-15.69,"vmag":5.2,"bmag":6.78,"sp_type":"K5-III","r":3.27,"op":0.61,"color":"#ffd2a1"},{"name":"12 Lib","ra0":223.58386910138,"dec0":-24.642204268810005,"pmra":-10.786,"pmdec":-28.376,"dist_pc":122.1,"plx":8.1903,"rv":8.8,"vmag":5.27,"bmag":6.612,"sp_type":"K2/3III","r":3.18,"op":0.59,"color":"#ffd2a1"},{"name":"ksi02 Lib","ra0":224.19214600516,"dec0":-11.40970003023,"pmra":8.851,"pmdec":9.815,"dist_pc":222.63,"plx":4.4918,"rv":14.6,"vmag":5.45,"bmag":6.946,"sp_type":"K4III","r":2.92,"op":0.55,"color":"#ffd2a1"},{"name":"zet04 Lib","ra0":233.23008856487,"dec0":-16.85284478365,"pmra":-12.879,"pmdec":-11.282,"dist_pc":230.83,"plx":4.3321,"rv":1.8,"vmag":5.5,"bmag":5.355,"sp_type":"B3V","r":2.85,"op":0.54,"color":"#aabfff"},{"name":"HD 135534","ra0":229.09587775037,"dec0":-22.39941430414,"pmra":-35.031,"pmdec":2.798,"dist_pc":126.61,"plx":7.898,"rv":-5.3,"vmag":5.51,"bmag":6.877,"sp_type":"K2III","r":2.84,"op":0.53,"color":"#ffd2a1"},{"name":"HD 138413","ra0":233.15292103366,"dec0":-19.67045843515,"pmra":-19.475,"pmdec":-38.831,"dist_pc":73.39,"plx":13.6252,"rv":-32.52,"vmag":5.52,"bmag":5.7,"sp_type":"A2IV","r":2.83,"op":0.53,"color":"#cad7ff"},{"name":"zet01 Lib","ra0":232.06420082374,"dec0":-16.71648542046,"pmra":16.299,"pmdec":-33.679,"dist_pc":197.92,"plx":5.0526,"rv":-21.4,"vmag":5.63,"bmag":7.161,"sp_type":"K4.5III","r":2.68,"op":0.5,"color":"#ffd2a1"},{"name":"HD 130529","ra0":222.32810034522,"dec0":-24.2514691265,"pmra":-22.596,"pmdec":0.073,"dist_pc":321.34,"plx":3.112,"rv":-26.3,"vmag":5.69,"bmag":6.972,"sp_type":"K3III+G","r":2.59,"op":0.49,"color":"#ffd2a1"},{"name":"zet03 Lib","ra0":232.66833885525,"dec0":-16.60946242113,"pmra":22.636,"pmdec":-1.766,"dist_pc":152.36,"plx":6.5635,"rv":-1.7,"vmag":5.81,"bmag":6.858,"sp_type":"K0III","r":2.43,"op":0.46,"color":"#ffd2a1"},{"name":"HD 135051","ra0":228.47213692451,"dec0":-26.1935740896,"pmra":-13.427,"pmdec":-6.286,"dist_pc":279.39,"plx":3.5792,"rv":-28.3,"vmag":5.86,"bmag":6.998,"sp_type":"G8/K0II","r":2.36,"op":0.45,"color":"#fff4ea"},{"name":"HD 130157","ra0":221.80687493926376,"dec0":-21.32487342392972,"pmra":-12.522,"pmdec":1.444,"dist_pc":384.69,"plx":2.5995,"rv":-24.16,"vmag":6.03,"bmag":7.677,"sp_type":"K4/5III","r":2.11,"op":0.4,"color":"#ffd2a1"},{"name":"omi Lib","ra0":230.25578898389,"dec0":-15.548351532910004,"pmra":20.404,"pmdec":29.818,"dist_pc":56.94,"plx":17.5623,"rv":8.82,"vmag":6.14,"bmag":6.513,"sp_type":"F2V","r":1.96,"op":0.38,"color":"#f8f7ff"},{"name":"26 Lib","ra0":228.64065780018,"dec0":-17.76857144771,"pmra":-16.223,"pmdec":-15.26,"dist_pc":251.1,"plx":3.9825,"rv":-25.9,"vmag":6.17,"bmag":6.156,"sp_type":"B9III","r":1.92,"op":0.37,"color":"#aabfff"},{"name":"HD 138105","ra0":232.65104577189,"dec0":-20.72855295235,"pmra":5.277,"pmdec":-29.067,"dist_pc":70.07,"plx":14.2724,"rv":-10.9,"vmag":6.19,"bmag":6.371,"sp_type":"A3V","r":1.89,"op":0.37,"color":"#cad7ff"},{"name":"HD 141853","ra0":237.90998054919,"dec0":-14.13358612059,"pmra":-22.361,"pmdec":-7.603,"dist_pc":224.52,"plx":4.454,"rv":-16.0,"vmag":6.21,"bmag":7.211,"sp_type":"G8III","r":1.87,"op":0.36,"color":"#fff4ea"},{"name":"HD 140986","ra0":236.68926767853,"dec0":-6.120356990670001,"pmra":-11.687,"pmdec":0.062,"dist_pc":219.18,"plx":4.5624,"rv":-51.86,"vmag":6.25,"bmag":7.41,"sp_type":"K0III","r":1.82,"op":0.35,"color":"#ffd2a1"},{"name":"10 Lib","ra0":222.96377559741,"dec0":-18.35532683924,"pmra":-12.774,"pmdec":-2.188,"dist_pc":327.02,"plx":3.0579,"rv":-21.9,"vmag":6.26,"bmag":7.37,"sp_type":"K0II/III","r":1.8,"op":0.35,"color":"#ffd2a1"}],"ra_min":221.806875,"ra_max":237.909981,"dec_min":-28.13511,"dec_max":-6.120357,"domain_pc":415.465,"centroid":{"x":-5.7938,"y":-6.5969,"z":-3.0303},"cam_dist":32.24},"Scorpius":{"stars":[{"name":"tet Sco","ra0":264.3297077207907,"dec0":-42.99782799333082,"pmra":5.54,"pmdec":-3.12,"dist_pc":92.08,"plx":10.86,"rv":5.18,"vmag":1.85,"bmag":2.29,"sp_type":"F1III","r":5.5,"op":1.0,"color":"#f8f7ff"},{"name":"ups Sco","ra0":262.6909880116666,"dec0":-37.295813475277775,"pmra":-2.37,"pmdec":-30.09,"dist_pc":176.68,"plx":5.66,"rv":8.0,"vmag":2.65,"bmag":2.48,"sp_type":"B2IV","r":4.69,"op":0.86,"color":"#aabfff"},{"name":"tau Sco","ra0":248.97063688749995,"dec0":-28.2160170875,"pmra":-9.89,"pmdec":-22.83,"dist_pc":145.35,"plx":6.88,"rv":-650.47,"vmag":2.81,"bmag":2.56,"sp_type":"B0V","r":4.53,"op":0.83,"color":"#aabfff"},{"name":"G Sco","ra0":267.4645037403808,"dec0":-37.04327637830389,"pmra":41.717,"pmdec":11.975,"dist_pc":40.43,"plx":24.734,"rv":24.7,"vmag":3.21,"bmag":4.38,"sp_type":"K2III","r":4.13,"op":0.76,"color":"#ffd2a1"},{"name":"H Sco","ra0":249.09363126313715,"dec0":-35.25533141158,"pmra":15.17,"pmdec":10.622,"dist_pc":96.66,"plx":10.3453,"rv":-2.1,"vmag":4.16,"bmag":5.73,"sp_type":"K5III","r":3.18,"op":0.59,"color":"#ffd2a1"},{"name":"N Sco","ra0":247.84556033467496,"dec0":-34.70436819282168,"pmra":-11.558,"pmdec":-18.39,"dist_pc":182.41,"plx":5.4821,"rv":0.8,"vmag":4.23,"bmag":4.06,"sp_type":"B2III-IV","r":3.1,"op":0.58,"color":"#aabfff"},{"name":"b Sco","ra0":237.74476859529997,"dec0":-25.75129407694,"pmra":-14.053,"pmdec":-24.937,"dist_pc":147.47,"plx":6.7811,"rv":-3.0,"vmag":4.63,"bmag":4.552,"sp_type":"B1.5Vn","r":2.69,"op":0.51,"color":"#aabfff"},{"name":"2 Sco A","ra0":238.40299355906,"dec0":-25.32713872595,"pmra":-16.327,"pmdec":-24.071,"dist_pc":142.21,"plx":7.0318,"rv":0.0,"vmag":4.71,"bmag":4.6,"sp_type":"","r":2.62,"op":0.49,"color":"#fff4ea"},{"name":"i Sco","ra0":247.5519802876917,"dec0":-25.115221268905003,"pmra":-4.193,"pmdec":-26.975,"dist_pc":125.94,"plx":7.9402,"rv":0.0,"vmag":4.79,"bmag":4.72,"sp_type":"B2.5V","r":2.54,"op":0.48,"color":"#aabfff"},{"name":"HD 161840","ra0":267.2936550248199,"dec0":-31.70320628738611,"pmra":5.506,"pmdec":-9.468,"dist_pc":170.86,"plx":5.8527,"rv":-13.3,"vmag":4.8,"bmag":4.753,"sp_type":"B8Ib/II","r":2.53,"op":0.48,"color":"#aabfff"},{"name":"iot02 Sco","ra0":267.54629914229,"dec0":-40.09043182076001,"pmra":2.686,"pmdec":-2.117,"dist_pc":1227.3,"plx":0.8148,"rv":-17.15,"vmag":4.8,"bmag":5.039,"sp_type":"A2Ib","r":2.52,"op":0.48,"color":"#cad7ff"},{"name":"HD 163145","ra0":269.1975706169499,"dec0":-44.34221848895,"pmra":-4.058,"pmdec":-24.973,"dist_pc":106.74,"plx":9.3687,"rv":35.6,"vmag":4.85,"bmag":6.041,"sp_type":"K2III","r":2.48,"op":0.47,"color":"#ffd2a1"},{"name":"HD 163376","ra0":269.4491771177079,"dec0":-41.71629326855278,"pmra":-4.794,"pmdec":-15.33,"dist_pc":174.18,"plx":5.7411,"rv":4.4,"vmag":4.86,"bmag":6.503,"sp_type":"M0III","r":2.46,"op":0.47,"color":"#ffcc6f"},{"name":"psi Sco","ra0":242.99997135053,"dec0":-10.06414170962,"pmra":-1.483,"pmdec":-31.351,"dist_pc":44.17,"plx":22.6379,"rv":-8.65,"vmag":4.93,"bmag":5.029,"sp_type":"A1V","r":2.4,"op":0.45,"color":"#cad7ff"},{"name":"HD 157243","ra0":261.0544936782054,"dec0":-44.16258555344695,"pmra":-2.989,"pmdec":-26.375,"dist_pc":215.28,"plx":4.6451,"rv":13.0,"vmag":5.11,"bmag":5.039,"sp_type":"B5/6III","r":2.22,"op":0.42,"color":"#aabfff"},{"name":"chi Sco","ra0":243.46210941047,"dec0":-11.83774786154,"pmra":-4.991,"pmdec":-9.931,"dist_pc":137.22,"plx":7.2874,"rv":-23.17,"vmag":5.24,"bmag":6.615,"sp_type":"K3III","r":2.08,"op":0.4,"color":"#ffd2a1"},{"name":"16 Sco","ra0":243.03048316754,"dec0":-8.547579594,"pmra":44.53,"pmdec":-0.487,"dist_pc":78.58,"plx":12.7258,"rv":-1.08,"vmag":5.42,"bmag":5.545,"sp_type":"A2IV","r":1.9,"op":0.37,"color":"#cad7ff"},{"name":"V V913 Sco","ra0":239.6452773729,"dec0":-24.831489368690004,"pmra":-12.451,"pmdec":-24.582,"dist_pc":142.76,"plx":7.005,"rv":-14.86,"vmag":5.43,"bmag":5.34,"sp_type":"B5V","r":1.89,"op":0.37,"color":"#aabfff"},{"name":"27 Sco","ra0":254.29656171654,"dec0":-33.25949228849,"pmra":4.572,"pmdec":-9.291,"dist_pc":191.0,"plx":5.2355,"rv":-76.37,"vmag":5.49,"bmag":7.11,"sp_type":"K5III","r":1.83,"op":0.36,"color":"#ffd2a1"},{"name":"HD 160668","ra0":265.71290596535994,"dec0":-36.94556242444,"pmra":7.725,"pmdec":-22.931,"dist_pc":187.63,"plx":5.3297,"rv":-1.53,"vmag":5.52,"bmag":7.073,"sp_type":"K5III","r":1.8,"op":0.35,"color":"#ffd2a1"}],"ra_min":237.744769,"ra_max":269.449177,"dec_min":-44.342218,"dec_max":-8.54758,"domain_pc":1325.479,"centroid":{"x":-1.6168,"y":-7.4586,"z":-5.3666},"cam_dist":166.96},"Sagittarius":{"stars":[{"name":"del Sgr","ra0":275.24851205687213,"dec0":-29.828102262591383,"pmra":33.212,"pmdec":-27.361,"dist_pc":127.44,"plx":7.8468,"rv":-20.4,"vmag":2.67,"bmag":4.069,"sp_type":"K2.5IIIaCN0.5","r":5.5,"op":1.0,"color":"#ffd2a1"},{"name":"ksi02 Sgr","ra0":284.4325007886946,"dec0":-21.1066575942875,"pmra":33.52,"pmdec":-13.552,"dist_pc":118.92,"plx":8.4092,"rv":-20.1,"vmag":3.51,"bmag":4.69,"sp_type":"G8/K0II/III","r":4.39,"op":0.8,"color":"#fff4ea"},{"name":"b Sgr","ra0":299.23680287255206,"dec0":-27.169897010698055,"pmra":7.393,"pmdec":-16.563,"dist_pc":262.81,"plx":3.8051,"rv":-16.2,"vmag":4.53,"bmag":5.98,"sp_type":"K2.5IIb","r":3.05,"op":0.57,"color":"#ffd2a1"},{"name":"HD 165634","ra0":272.02074505330586,"dec0":-28.45709265001583,"pmra":24.35,"pmdec":-31.617,"dist_pc":105.58,"plx":9.4718,"rv":-4.87,"vmag":4.56,"bmag":5.51,"sp_type":"G7:IIIbCN-1CH-3.5HK+1","r":3.0,"op":0.56,"color":"#fff4ea"},{"name":"HD 167818","ra0":274.51329851055624,"dec0":-27.042643520009165,"pmra":5.398,"pmdec":-4.195,"dist_pc":222.92,"plx":4.486,"rv":-15.14,"vmag":4.63,"bmag":6.265,"sp_type":"K3II","r":2.92,"op":0.55,"color":"#ffd2a1"},{"name":"nu.01 Sgr","ra0":283.54240867928,"dec0":-22.74483961587,"pmra":3.919,"pmdec":-8.092,"dist_pc":543.86,"plx":1.8387,"rv":-11.57,"vmag":4.84,"bmag":6.251,"sp_type":"K1II","r":2.63,"op":0.5,"color":"#ffd2a1"},{"name":"60 Sgr","ra0":299.73834242433,"dec0":-26.19576247541,"pmra":26.283,"pmdec":27.104,"dist_pc":113.72,"plx":8.7932,"rv":-48.6,"vmag":4.85,"bmag":5.735,"sp_type":"G6III","r":2.63,"op":0.5,"color":"#fff4ea"},{"name":"21 Sgr","ra0":276.33766429256,"dec0":-20.54167283526,"pmra":6.108,"pmdec":-26.699,"dist_pc":147.42,"plx":6.7833,"rv":-10.75,"vmag":4.86,"bmag":6.32,"sp_type":"K1/2III","r":2.61,"op":0.49,"color":"#ffd2a1"},{"name":"d Sgr","ra0":289.4086630645,"dec0":-18.9529062457,"pmra":-10.417,"pmdec":-10.913,"dist_pc":147.55,"plx":6.7773,"rv":15.2,"vmag":4.88,"bmag":5.895,"sp_type":"G8II-III","r":2.58,"op":0.49,"color":"#fff4ea"},{"name":"1 Sgr","ra0":272.93055316182,"dec0":-23.701231598440007,"pmra":9.905,"pmdec":-32.048,"dist_pc":81.57,"plx":12.2588,"rv":5.71,"vmag":4.98,"bmag":6.03,"sp_type":"K0III","r":2.45,"op":0.46,"color":"#ffd2a1"},{"name":"HD 190056","ra0":301.08163754482,"dec0":-32.05629631122,"pmra":47.014,"pmdec":-14.643,"dist_pc":106.65,"plx":9.3767,"rv":-11.7,"vmag":4.99,"bmag":6.2,"sp_type":"K1III/IV","r":2.44,"op":0.46,"color":"#ffd2a1"},{"name":"ksi01 Sgr","ra0":284.33532038596,"dec0":-20.65634787079,"pmra":-1.116,"pmdec":-6.066,"dist_pc":680.97,"plx":1.4685,"rv":2.5,"vmag":5.05,"bmag":5.14,"sp_type":"B9/A0Ib","r":2.35,"op":0.45,"color":"#aabfff"},{"name":"HD 170680","ra0":277.85957435405,"dec0":-18.40269832713,"pmra":-4.892,"pmdec":-21.92,"dist_pc":64.4,"plx":15.527,"rv":-29.03,"vmag":5.12,"bmag":5.126,"sp_type":"B9/9.5V","r":2.27,"op":0.43,"color":"#aabfff"},{"name":"29 Sgr","ra0":282.41711665726,"dec0":-20.324654640190005,"pmra":-0.575,"pmdec":33.156,"dist_pc":160.44,"plx":6.2328,"rv":-17.93,"vmag":5.21,"bmag":6.615,"sp_type":"K2III","r":2.15,"op":0.41,"color":"#ffd2a1"},{"name":"7 Sgr","ra0":270.71291093894,"dec0":-24.28246728687,"pmra":1.096,"pmdec":-17.329,"dist_pc":348.43,"plx":2.87,"rv":-5.62,"vmag":5.34,"bmag":5.86,"sp_type":"F2II-III","r":1.98,"op":0.38,"color":"#f8f7ff"},{"name":"28 Sgr","ra0":281.58587913429,"dec0":-22.39217317927,"pmra":28.317,"pmdec":-1.455,"dist_pc":228.31,"plx":4.38,"rv":-2.7,"vmag":5.37,"bmag":6.961,"sp_type":"K5III","r":1.94,"op":0.37,"color":"#ffd2a1"},{"name":"HD 170479","ra0":277.7701727916116,"dec0":-32.9890982509367,"pmra":-1.371,"pmdec":-47.071,"dist_pc":93.94,"plx":10.6451,"rv":9.2,"vmag":5.39,"bmag":5.566,"sp_type":"A5V","r":1.91,"op":0.37,"color":"#cad7ff"},{"name":"chi03 Sgr","ra0":291.37358156858,"dec0":-23.962453665290003,"pmra":-18.53,"pmdec":-12.145,"dist_pc":156.78,"plx":6.3782,"rv":40.86,"vmag":5.43,"bmag":6.86,"sp_type":"K3III","r":1.86,"op":0.36,"color":"#ffd2a1"},{"name":"24 Sgr","ra0":278.47285965291,"dec0":-24.03228199515,"pmra":-2.543,"pmdec":-7.346,"dist_pc":564.49,"plx":1.7715,"rv":-2.29,"vmag":5.46,"bmag":7.263,"sp_type":"K3III","r":1.82,"op":0.35,"color":"#ffd2a1"},{"name":"14 Sgr","ra0":273.56624985929,"dec0":-21.7131626408,"pmra":-15.294,"pmdec":-23.625,"dist_pc":145.65,"plx":6.8658,"rv":-58.9,"vmag":5.47,"bmag":6.984,"sp_type":"K2III","r":1.8,"op":0.35,"color":"#ffd2a1"}],"ra_min":270.712911,"ra_max":301.081638,"dec_min":-32.989098,"dec_max":-18.402698,"domain_pc":735.444,"centroid":{"x":2.1077,"y":-9.7874,"z":-4.4313},"cam_dist":74.03},"Capricornus":{"stars":[{"name":"ome Cap","ra0":312.95537723912,"dec0":-26.91913484546,"pmra":-9.016,"pmdec":-2.048,"dist_pc":169.56,"plx":5.8975,"rv":9.1,"vmag":4.12,"bmag":5.75,"sp_type":"M0IIIBa0.5","r":5.5,"op":1.0,"color":"#ffcc6f"},{"name":"nu. Cap","ra0":305.1658991456237,"dec0":-12.759080634501943,"pmra":14.13,"pmdec":-15.123,"dist_pc":82.14,"plx":12.1737,"rv":-1.74,"vmag":4.76,"bmag":4.72,"sp_type":"B9IV","r":4.41,"op":0.81,"color":"#aabfff"},{"name":"rho Cap A","ra0":307.2150616165,"dec0":-17.81368307879,"pmra":-16.889,"pmdec":-10.579,"dist_pc":30.09,"plx":33.2297,"rv":0.0,"vmag":4.93,"bmag":5.26,"sp_type":"","r":4.11,"op":0.76,"color":"#fff4ea"},{"name":"c Cap","ra0":326.25106113622,"dec0":-9.08242767233,"pmra":13.438,"pmdec":-1.9,"dist_pc":238.63,"plx":4.1906,"rv":-15.52,"vmag":5.08,"bmag":6.189,"sp_type":"G7.5II-IIICN0.5","r":3.86,"op":0.71,"color":"#fff4ea"},{"name":"ups Cap","ra0":310.01226805726,"dec0":-18.13865741239,"pmra":-22.764,"pmdec":-22.17,"dist_pc":193.35,"plx":5.1719,"rv":-10.73,"vmag":5.1,"bmag":6.76,"sp_type":"M1III","r":3.82,"op":0.71,"color":"#ffcc6f"},{"name":"phi Cap","ra0":318.90791479859,"dec0":-20.65169521012,"pmra":13.85,"pmdec":-2.682,"dist_pc":205.11,"plx":4.8754,"rv":-4.72,"vmag":5.15,"bmag":6.317,"sp_type":"K0II/III","r":3.73,"op":0.69,"color":"#ffd2a1"},{"name":"sig Cap","ra0":304.84835118396995,"dec0":-19.11852538377,"pmra":5.034,"pmdec":-10.825,"dist_pc":290.29,"plx":3.4448,"rv":-9.64,"vmag":5.26,"bmag":6.665,"sp_type":"K2III","r":3.54,"op":0.66,"color":"#ffd2a1"},{"name":"29 Cap","ra0":318.93684309798,"dec0":-15.17150133814,"pmra":23.818,"pmdec":4.264,"dist_pc":215.91,"plx":4.6316,"rv":-37.8,"vmag":5.32,"bmag":6.894,"sp_type":"M2III","r":3.45,"op":0.64,"color":"#ffcc6f"},{"name":"30 Cap","ra0":319.48869364446,"dec0":-17.9851386273,"pmra":16.026,"pmdec":-0.967,"dist_pc":233.81,"plx":4.277,"rv":-11.1,"vmag":5.38,"bmag":5.263,"sp_type":"B5II/III","r":3.34,"op":0.62,"color":"#aabfff"},{"name":"lam Cap","ra0":326.63373798506,"dec0":-11.36595522792,"pmra":29.007,"pmdec":-9.42,"dist_pc":83.16,"plx":12.0253,"rv":2.32,"vmag":5.57,"bmag":5.56,"sp_type":"A0V","r":3.02,"op":0.57,"color":"#cad7ff"},{"name":"HD 203475","ra0":320.75206122297,"dec0":-22.66904678252,"pmra":35.365,"pmdec":0.167,"dist_pc":232.79,"plx":4.2958,"rv":-10.55,"vmag":5.6,"bmag":7.228,"sp_type":"M0III","r":2.97,"op":0.56,"color":"#ffcc6f"},{"name":"35 Cap","ra0":321.81175708289,"dec0":-21.19621434535,"pmra":-29.553,"pmdec":-30.168,"dist_pc":161.86,"plx":6.1782,"rv":29.88,"vmag":5.76,"bmag":7.215,"sp_type":"K3III","r":2.69,"op":0.51,"color":"#ffd2a1"},{"name":"44 Cap","ra0":325.76832108434,"dec0":-14.39971028135,"pmra":-5.482,"pmdec":19.833,"dist_pc":142.92,"plx":6.9967,"rv":-13.4,"vmag":5.88,"bmag":6.127,"sp_type":"A9/F0V","r":2.49,"op":0.47,"color":"#cad7ff"},{"name":"17 Cap","ra0":311.54161670263,"dec0":-21.514036022269995,"pmra":22.22,"pmdec":-18.351,"dist_pc":89.81,"plx":11.1349,"rv":1.8,"vmag":5.9,"bmag":5.958,"sp_type":"A1V","r":2.45,"op":0.46,"color":"#cad7ff"},{"name":"HD 202261","ra0":318.77757397027,"dec0":-17.34517877786,"pmra":4.163,"pmdec":-19.319,"dist_pc":118.2,"plx":8.4601,"rv":-0.73,"vmag":6.04,"bmag":7.024,"sp_type":"K0III","r":2.22,"op":0.42,"color":"#ffd2a1"},{"name":"HD 200052","ra0":315.43866402762995,"dec0":-26.88099818476,"pmra":19.328,"pmdec":-23.389,"dist_pc":82.97,"plx":12.0521,"rv":-5.06,"vmag":6.04,"bmag":6.101,"sp_type":"A3V","r":2.22,"op":0.42,"color":"#cad7ff"},{"name":"21 Cap","ra0":315.21569071811,"dec0":-17.5308952076,"pmra":-30.851,"pmdec":-16.774,"dist_pc":174.44,"plx":5.7326,"rv":1.1,"vmag":6.05,"bmag":7.32,"sp_type":"K3III","r":2.2,"op":0.42,"color":"#ffd2a1"},{"name":"HD 195006","ra0":307.38059105828995,"dec0":-22.39156530107,"pmra":9.194,"pmdec":-30.619,"dist_pc":194.15,"plx":5.1507,"rv":55.5,"vmag":6.13,"bmag":7.693,"sp_type":"K5III","r":2.07,"op":0.4,"color":"#ffd2a1"},{"name":"HD 198208","ra0":312.3355955441,"dec0":-18.03585624228,"pmra":1.313,"pmdec":-34.22,"dist_pc":250.11,"plx":3.9982,"rv":46.04,"vmag":6.19,"bmag":7.601,"sp_type":"K3III","r":1.95,"op":0.38,"color":"#ffd2a1"},{"name":"HD 193896","ra0":305.75329087324,"dec0":-9.65471052279,"pmra":24.655,"pmdec":-16.439,"dist_pc":185.77,"plx":5.3831,"rv":-15.23,"vmag":6.28,"bmag":7.194,"sp_type":"G5IIIa","r":1.8,"op":0.35,"color":"#fff4ea"}],"ra_min":304.848351,"ra_max":326.633738,"dec_min":-26.919135,"dec_max":-9.082428,"domain_pc":313.516,"centroid":{"x":5.6571,"y":-5.5704,"z":-2.5976},"cam_dist":21.97},"Aquarius":{"stars":[{"name":"bet Aqr","ra0":322.8897169834788,"dec0":-5.571174828063612,"pmra":19.214,"pmdec":-8.163,"dist_pc":167.43,"plx":5.9728,"rv":6.45,"vmag":2.89,"bmag":3.71,"sp_type":"G0Ib","r":5.5,"op":1.0,"color":"#fff4ea"},{"name":"alf Aqr","ra0":331.4459814409479,"dec0":-0.3198509554241667,"pmra":18.59,"pmdec":-10.45,"dist_pc":202.22,"plx":4.9451,"rv":6.83,"vmag":2.94,"bmag":3.9,"sp_type":"G2Ib","r":5.43,"op":0.99,"color":"#fff4ea"},{"name":"eps Aqr","ra0":311.9189565534167,"dec0":-9.495776926900833,"pmra":33.923,"pmdec":-34.936,"dist_pc":74.84,"plx":13.3619,"rv":-19.82,"vmag":3.77,"bmag":3.77,"sp_type":"B9.5V","r":4.32,"op":0.79,"color":"#aabfff"},{"name":"tau Aqr","ra0":342.3979207511145,"dec0":-13.592628543936945,"pmra":-13.386,"pmdec":-38.609,"dist_pc":99.83,"plx":10.0171,"rv":1.1,"vmag":3.98,"bmag":5.57,"sp_type":"M0III","r":4.04,"op":0.74,"color":"#ffcc6f"},{"name":"g Aqr","ra0":340.89680519415367,"dec0":-18.83037508142056,"pmra":-32.523,"pmdec":-28.21,"dist_pc":126.0,"plx":7.9362,"rv":21.7,"vmag":4.69,"bmag":6.06,"sp_type":"K3III","r":3.09,"op":0.58,"color":"#ffd2a1"},{"name":"b03 Aqr","ra0":353.3192590454091,"dec0":-20.914495039035,"pmra":0.007,"pmdec":5.384,"dist_pc":76.48,"plx":13.0753,"rv":15.0,"vmag":4.76,"bmag":4.77,"sp_type":"A0V","r":3.0,"op":0.56,"color":"#cad7ff"},{"name":"sig Aqr","ra0":337.66175584903,"dec0":-10.6779180573,"pmra":-4.095,"pmdec":-38.019,"dist_pc":63.19,"plx":15.8247,"rv":11.7,"vmag":4.81,"bmag":4.73,"sp_type":"A0IVs","r":2.93,"op":0.55,"color":"#cad7ff"},{"name":"104 Aqr","ra0":355.44085990105,"dec0":-17.81653194641,"pmra":14.332,"pmdec":0.679,"dist_pc":218.61,"plx":4.5743,"rv":6.52,"vmag":4.83,"bmag":5.65,"sp_type":"G2Ib/II","r":2.9,"op":0.54,"color":"#fff4ea"},{"name":"psi03 Aqr","ra0":349.74031942223,"dec0":-9.61074871262,"pmra":44.346,"pmdec":-7.951,"dist_pc":70.86,"plx":14.1132,"rv":-10.0,"vmag":5.0,"bmag":4.977,"sp_type":"B9V","r":2.67,"op":0.5,"color":"#aabfff"},{"name":"i01 Aqr","ra0":356.05032542615,"dec0":-18.27694956298,"pmra":28.825,"pmdec":-2.064,"dist_pc":131.75,"plx":7.5902,"rv":16.0,"vmag":5.24,"bmag":5.152,"sp_type":"B9V","r":2.36,"op":0.45,"color":"#aabfff"},{"name":"HD 222643","ra0":355.61592693594,"dec0":-15.448028948530002,"pmra":14.608,"pmdec":-21.282,"dist_pc":227.93,"plx":4.3874,"rv":0.37,"vmag":5.26,"bmag":6.606,"sp_type":"K3III","r":2.33,"op":0.44,"color":"#ffd2a1"},{"name":"42 Aqr","ra0":334.2001908858799,"dec0":-12.83143288236,"pmra":3.567,"pmdec":6.028,"dist_pc":134.62,"plx":7.4283,"rv":11.62,"vmag":5.33,"bmag":6.463,"sp_type":"K1III","r":2.23,"op":0.43,"color":"#ffd2a1"},{"name":"e Aqr","ra0":332.65617743047704,"dec0":-11.564938650259167,"pmra":29.119,"pmdec":8.73,"dist_pc":157.74,"plx":6.3394,"rv":-1.7,"vmag":5.42,"bmag":5.299,"sp_type":"B5III","r":2.11,"op":0.4,"color":"#aabfff"},{"name":"7 Aqr","ra0":314.22511066352,"dec0":-9.69754179898,"pmra":-5.86,"pmdec":-10.92,"dist_pc":198.74,"plx":5.0316,"rv":-31.68,"vmag":5.48,"bmag":6.97,"sp_type":"K4III","r":2.03,"op":0.39,"color":"#ffd2a1"},{"name":"30 Aqr","ra0":330.81857563765,"dec0":-6.522407351809999,"pmra":45.517,"pmdec":8.126,"dist_pc":92.96,"plx":10.7574,"rv":39.74,"vmag":5.54,"bmag":6.512,"sp_type":"K1IV","r":1.95,"op":0.38,"color":"#ffd2a1"},{"name":"HD 219402","ra0":348.89273927162,"dec0":-3.4963784075700004,"pmra":-12.906,"pmdec":-2.299,"dist_pc":74.43,"plx":13.435,"rv":13.78,"vmag":5.55,"bmag":5.61,"sp_type":"A2V","r":1.94,"op":0.37,"color":"#cad7ff"},{"name":"5 Aqr","ra0":313.03622430074995,"dec0":-5.507058186369999,"pmra":1.271,"pmdec":-5.828,"dist_pc":239.06,"plx":4.1831,"rv":0.1,"vmag":5.55,"bmag":5.46,"sp_type":"B9III","r":1.93,"op":0.37,"color":"#aabfff"},{"name":"28 Aqr","ra0":330.27089693754,"dec0":0.6047180014000001,"pmra":6.765,"pmdec":-10.993,"dist_pc":185.79,"plx":5.3825,"rv":8.47,"vmag":5.6,"bmag":6.887,"sp_type":"K2III","r":1.88,"op":0.36,"color":"#ffd2a1"},{"name":"26 Aqr","ra0":325.54213555265,"dec0":1.28525415301,"pmra":-3.918,"pmdec":-8.35,"dist_pc":322.79,"plx":3.098,"rv":8.15,"vmag":5.64,"bmag":7.102,"sp_type":"K2(III)","r":1.82,"op":0.35,"color":"#ffd2a1"},{"name":"HD 222093","ra0":354.41483333436,"dec0":-13.06024123397,"pmra":34.875,"pmdec":26.451,"dist_pc":90.81,"plx":11.0119,"rv":-12.56,"vmag":5.65,"bmag":6.685,"sp_type":"G9III","r":1.8,"op":0.35,"color":"#fff4ea"}],"ra_min":311.918957,"ra_max":356.050325,"dec_min":-20.914495,"dec_max":1.285254,"domain_pc":348.612,"centroid":{"x":6.3423,"y":-2.9797,"z":-1.1449},"cam_dist":30.11},"Pisces":{"stars":[{"name":"22 Psc","ra0":357.990995288,"dec0":2.93038643257,"pmra":15.881,"pmdec":-14.136,"dist_pc":264.23,"plx":3.7846,"rv":4.46,"vmag":5.55,"bmag":7.108,"sp_type":"K4IIIBa1","r":5.5,"op":1.0,"color":"#ffd2a1"},{"name":"21 Psc","ra0":357.36447579926,"dec0":1.0761290253600002,"pmra":-2.788,"pmdec":-27.4,"dist_pc":94.0,"plx":10.6384,"rv":6.29,"vmag":5.7,"bmag":5.93,"sp_type":"A3III","r":5.1,"op":0.93,"color":"#cad7ff"},{"name":"HD 222602","ra0":355.48620748213,"dec0":7.25054859607,"pmra":-27.486,"pmdec":-40.251,"dist_pc":94.41,"plx":10.5925,"rv":3.38,"vmag":5.89,"bmag":5.985,"sp_type":"A3Vn","r":4.57,"op":0.84,"color":"#cad7ff"},{"name":"1 Psc","ra0":343.74785584463,"dec0":1.0649026686499998,"pmra":19.283,"pmdec":4.642,"dist_pc":110.24,"plx":9.071,"rv":12.8,"vmag":6.11,"bmag":6.31,"sp_type":"A3IV","r":3.96,"op":0.73,"color":"#cad7ff"},{"name":"26 Psc","ra0":358.78246934079,"dec0":7.0709711448,"pmra":23.164,"pmdec":-18.51,"dist_pc":121.56,"plx":8.2263,"rv":16.8,"vmag":6.21,"bmag":6.153,"sp_type":"B9V","r":3.69,"op":0.68,"color":"#aabfff"},{"name":"25 Psc","ra0":358.26983655555,"dec0":2.090616272200001,"pmra":16.707,"pmdec":-9.801,"dist_pc":127.22,"plx":7.8606,"rv":7.11,"vmag":6.28,"bmag":6.275,"sp_type":"B9.5V","r":3.49,"op":0.65,"color":"#aabfff"},{"name":"11 Psc","ra0":352.36244551118995,"dec0":-1.7912139678800003,"pmra":-14.757,"pmdec":-22.461,"dist_pc":310.93,"plx":3.2162,"rv":11.92,"vmag":6.34,"bmag":7.48,"sp_type":"K0III","r":3.32,"op":0.62,"color":"#ffd2a1"},{"name":"13 Psc","ra0":352.98986168987,"dec0":-1.08589568993,"pmra":8.695,"pmdec":17.164,"dist_pc":226.72,"plx":4.4107,"rv":-22.5,"vmag":6.38,"bmag":7.584,"sp_type":"K0III","r":3.2,"op":0.6,"color":"#ffd2a1"},{"name":"HD 218103","ra0":346.32347108324,"dec0":1.30712681701,"pmra":34.593,"pmdec":-21.432,"dist_pc":117.13,"plx":8.5375,"rv":-9.35,"vmag":6.39,"bmag":7.338,"sp_type":"G8/K0III/IV","r":3.19,"op":0.59,"color":"#fff4ea"},{"name":"HD 217926","ra0":346.00324786657,"dec0":6.616340803180001,"pmra":-26.73,"pmdec":8.26,"dist_pc":81.09,"plx":12.3319,"rv":4.0,"vmag":6.42,"bmag":6.816,"sp_type":"F2V","r":3.11,"op":0.58,"color":"#f8f7ff"},{"name":"HD 223346","ra0":357.20569216879,"dec0":2.2144148291600003,"pmra":9.646,"pmdec":-34.672,"dist_pc":57.34,"plx":17.4405,"rv":-17.96,"vmag":6.46,"bmag":6.91,"sp_type":"F5V","r":3.0,"op":0.56,"color":"#f8f7ff"},{"name":"HD 216931","ra0":344.27857223378,"dec0":-3.24521759809,"pmra":28.555,"pmdec":14.65,"dist_pc":107.36,"plx":9.3141,"rv":13.55,"vmag":6.62,"bmag":6.834,"sp_type":"A1/2III","r":2.55,"op":0.48,"color":"#cad7ff"},{"name":"HD 216400","ra0":343.13697643051,"dec0":3.55223244167,"pmra":11.607,"pmdec":-2.541,"dist_pc":174.45,"plx":5.7324,"rv":0.0,"vmag":6.64,"bmag":6.79,"sp_type":"A2/3IV","r":2.49,"op":0.47,"color":"#cad7ff"},{"name":"HD 220796","ra0":351.68185839277,"dec0":2.4783731086800005,"pmra":-7.497,"pmdec":17.727,"dist_pc":154.73,"plx":6.4629,"rv":3.07,"vmag":6.72,"bmag":7.82,"sp_type":"K0III","r":2.27,"op":0.43,"color":"#ffd2a1"},{"name":"HD 220512","ra0":351.0686096842671,"dec0":3.715516602219445,"pmra":-3.186,"pmdec":-26.535,"dist_pc":236.8,"plx":4.223,"rv":-12.42,"vmag":6.72,"bmag":8.01,"sp_type":"K1III/IV","r":2.27,"op":0.43,"color":"#ffd2a1"},{"name":"HD 223707","ra0":357.97322817409,"dec0":4.745362569809999,"pmra":18.559,"pmdec":5.947,"dist_pc":175.27,"plx":5.7056,"rv":9.6,"vmag":6.78,"bmag":6.88,"sp_type":"A1IV/V","r":2.1,"op":0.4,"color":"#cad7ff"},{"name":"HD 223685","ra0":357.91742835785993,"dec0":4.697901095050001,"pmra":-34.273,"pmdec":25.654,"dist_pc":307.16,"plx":3.2556,"rv":14.12,"vmag":6.8,"bmag":8.3,"sp_type":"K4III","r":2.05,"op":0.39,"color":"#ffd2a1"},{"name":"HD 216565","ra0":343.46732369084,"dec0":1.84315076986,"pmra":16.032,"pmdec":-12.801,"dist_pc":340.27,"plx":2.9388,"rv":1.31,"vmag":6.8,"bmag":8.44,"sp_type":"K4III","r":2.05,"op":0.39,"color":"#ffd2a1"},{"name":"HD 222919","ra0":356.20394024474,"dec0":7.191808063619999,"pmra":20.536,"pmdec":-10.433,"dist_pc":137.92,"plx":7.2504,"rv":-17.2,"vmag":6.87,"bmag":7.96,"sp_type":"K0","r":1.86,"op":0.36,"color":"#ffd2a1"},{"name":"HD 223292","ra0":357.06020335293,"dec0":7.16318645311,"pmra":-21.714,"pmdec":-31.251,"dist_pc":161.44,"plx":6.1944,"rv":-19.17,"vmag":6.89,"bmag":7.89,"sp_type":"G5","r":1.8,"op":0.35,"color":"#fff4ea"}],"ra_min":343.136976,"ra_max":358.782469,"dec_min":-3.245218,"dec_max":7.250549,"domain_pc":367.497,"centroid":{"x":8.3647,"y":-1.1177,"z":0.4096},"cam_dist":28.06}}};
+  const ZODIAC_ORDER = ZODIAC.order;
+  let currentIndex = ZODIAC_ORDER.indexOf('Libra');
 
-  function cleanName(name) {
-    return name.replace(/^\*\s+/, '').trim();
-  }
-
-  // ---- Time-slider machinery ----
-  // One base dataset (measured epoch position + proper motion) drives the
-  // hero map, the distance/reference chart, and the 3D viewer together.
-  const STAR_BASE = [{"name": "ups Lib", "ra0": 234.25603706873625, "dec0": -28.135110461468887, "pmra": -16.261, "pmdec": 11.711, "dist_pc": 64.41, "rv": -24.9, "vmag": 3.59, "r": 5.5, "op": 1.0, "color": "#ffd2a1"}, {"name": "42 Lib", "ra0": 235.0704055109, "dec0": -23.81808364893, "pmra": -16.044, "pmdec": -16.111, "dist_pc": 121.83, "rv": -21.8, "vmag": 4.96, "r": 3.6, "op": 0.67, "color": "#ffd2a1"}, {"name": "36 Lib", "ra0": 233.65549239999, "dec0": -28.047020260619995, "pmra": 10.755, "pmdec": -32.18, "dist_pc": 106.55, "rv": 22.11, "vmag": 5.14, "r": 3.35, "op": 0.62, "color": "#ffd2a1"}, {"name": "nu. Lib", "ra0": 226.65665213046998, "dec0": -16.256818608409997, "pmra": -36.821, "pmdec": -23.247, "dist_pc": 193.15, "rv": -15.69, "vmag": 5.2, "r": 3.27, "op": 0.61, "color": "#ffd2a1"}, {"name": "12 Lib", "ra0": 223.58386910138, "dec0": -24.642204268810005, "pmra": -10.786, "pmdec": -28.376, "dist_pc": 122.1, "rv": 8.8, "vmag": 5.27, "r": 3.18, "op": 0.59, "color": "#ffd2a1"}, {"name": "ksi02 Lib", "ra0": 224.19214600515997, "dec0": -11.409700030229999, "pmra": 8.851, "pmdec": 9.815, "dist_pc": 222.63, "rv": 14.6, "vmag": 5.45, "r": 2.92, "op": 0.55, "color": "#ffd2a1"}, {"name": "zet04 Lib", "ra0": 233.23008856487002, "dec0": -16.85284478365, "pmra": -12.879, "pmdec": -11.282, "dist_pc": 230.83, "rv": 1.8, "vmag": 5.5, "r": 2.85, "op": 0.54, "color": "#aabfff"}, {"name": "HD 135534", "ra0": 229.09587775037, "dec0": -22.39941430414, "pmra": -35.031, "pmdec": 2.798, "dist_pc": 126.61, "rv": -5.3, "vmag": 5.51, "r": 2.84, "op": 0.53, "color": "#ffd2a1"}, {"name": "HD 138413", "ra0": 233.15292103366, "dec0": -19.670458435149996, "pmra": -19.475, "pmdec": -38.831, "dist_pc": 73.39, "rv": -32.52, "vmag": 5.52, "r": 2.83, "op": 0.53, "color": "#cad7ff"}, {"name": "zet01 Lib", "ra0": 232.06420082374, "dec0": -16.71648542046, "pmra": 16.299, "pmdec": -33.679, "dist_pc": 197.92, "rv": -21.4, "vmag": 5.63, "r": 2.68, "op": 0.5, "color": "#ffd2a1"}, {"name": "HD 130529", "ra0": 222.32810034521998, "dec0": -24.251469126499998, "pmra": -22.596, "pmdec": 0.073, "dist_pc": 321.34, "rv": -26.3, "vmag": 5.69, "r": 2.59, "op": 0.49, "color": "#ffd2a1"}, {"name": "zet03 Lib", "ra0": 232.66833885525, "dec0": -16.60946242113, "pmra": 22.636, "pmdec": -1.766, "dist_pc": 152.36, "rv": -1.7, "vmag": 5.81, "r": 2.43, "op": 0.46, "color": "#ffd2a1"}, {"name": "HD 135051", "ra0": 228.47213692450998, "dec0": -26.193574089600002, "pmra": -13.427, "pmdec": -6.286, "dist_pc": 279.39, "rv": -28.3, "vmag": 5.86, "r": 2.36, "op": 0.45, "color": "#fff4ea"}, {"name": "HD 130157", "ra0": 221.80687493926376, "dec0": -21.324873423929716, "pmra": -12.522, "pmdec": 1.444, "dist_pc": 384.69, "rv": -24.16, "vmag": 6.03, "r": 2.11, "op": 0.4, "color": "#ffd2a1"}, {"name": "omi Lib", "ra0": 230.25578898389, "dec0": -15.548351532910003, "pmra": 20.404, "pmdec": 29.818, "dist_pc": 56.94, "rv": 8.82, "vmag": 6.14, "r": 1.96, "op": 0.38, "color": "#f8f7ff"}, {"name": "26 Lib", "ra0": 228.64065780017998, "dec0": -17.76857144771, "pmra": -16.223, "pmdec": -15.26, "dist_pc": 251.1, "rv": -25.9, "vmag": 6.17, "r": 1.92, "op": 0.37, "color": "#aabfff"}, {"name": "HD 138105", "ra0": 232.65104577188998, "dec0": -20.728552952349997, "pmra": 5.277, "pmdec": -29.067, "dist_pc": 70.07, "rv": -10.9, "vmag": 6.19, "r": 1.89, "op": 0.37, "color": "#cad7ff"}, {"name": "HD 141853", "ra0": 237.90998054918998, "dec0": -14.13358612059, "pmra": -22.361, "pmdec": -7.603, "dist_pc": 224.52, "rv": -16.0, "vmag": 6.21, "r": 1.87, "op": 0.36, "color": "#fff4ea"}, {"name": "HD 140986", "ra0": 236.68926767852997, "dec0": -6.120356990670001, "pmra": -11.687, "pmdec": 0.062, "dist_pc": 219.18, "rv": -51.86, "vmag": 6.25, "r": 1.82, "op": 0.35, "color": "#ffd2a1"}, {"name": "10 Lib", "ra0": 222.96377559740998, "dec0": -18.35532683924, "pmra": -12.774, "pmdec": -2.188, "dist_pc": 327.02, "rv": -21.9, "vmag": 6.26, "r": 1.8, "op": 0.35, "color": "#ffd2a1"}];
-
-  const RA_MIN = 221.80687493926376, RA_MAX = 237.90998054918998;
-  const DEC_MIN = -28.135110461468887, DEC_MAX = -6.120356990670001;
+  // ============================================================
+  // 2. Mutable "current constellation" state — reassigned on every switch
+  // ============================================================
+  let STAR_BASE = [];
+  let RA_MIN = 0, RA_MAX = 1, DEC_MIN = 0, DEC_MAX = 1;
   const HERO_PAD = 40, HERO_W = 400;
   const CHART_Y0 = 90, CHART_Y1 = 360;
-  const CHART_X0 = 150, CHART_X1 = 900, CHART_DOMAIN_PC = 415.464512406232;
+  const CHART_X0 = 150, CHART_X1 = 900;
+  let CHART_DOMAIN_PC = 100;
   const REF_RX0 = 1000, REF_RX1 = 1220;
   const KMS_TO_PC_PER_YEAR = 1.0227e-6; // 1 km/s = this many parsecs per year
-  // fixed 3D centroid (raw pre-remap coordinates), computed once at epoch 0 —
-  // kept fixed across all years so the 3D pivot doesn't drift as stars move.
-  const CENTROID_3D = { x: -5.794, y: -6.597, z: -3.03 };
+  let CENTROID_3D = { x: 0, y: 0, z: 0 };
+  let EARTH_REL = { x: 0, y: 0, z: 0 };
+  let CAM_DIST = 26;
 
   function scaleVal(v, vmin, vmax, outMin, outMax) {
     return outMin + (v - vmin) / (vmax - vmin) * (outMax - outMin);
@@ -654,8 +697,7 @@
   // Extrapolate a star's RA/Dec/distance at a given year offset from now.
   // RA/Dec use the measured proper motion (pmra is already mu_alpha*cos(dec)
   // per SIMBAD convention, so it's divided by cos(dec) to recover true RA
-  // change). Distance uses the measured radial velocity — how fast the star
-  // is moving directly toward/away from us along our line of sight.
+  // change). Distance uses the measured radial velocity.
   function propagate(star, years) {
     const decRad = star.dec0 * Math.PI / 180;
     const deltaDecDeg = (star.pmdec * years) / 3.6e6;
@@ -687,14 +729,37 @@
     return { x: rx - CENTROID_3D.x, y: rz - CENTROID_3D.z, z: ry - CENTROID_3D.y };
   }
 
-  // filled in as each visual renders itself; used by the slider to update all three
+  // "nice" round tick values for the distance axis, since domain size varies
+  // wildly between constellations (tens to hundreds of parsecs)
+  function niceStep(raw) {
+    const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+    const norm = raw / mag;
+    let step;
+    if (norm < 1.5) step = 1; else if (norm < 3) step = 2; else if (norm < 7) step = 5; else step = 10;
+    return step * mag;
+  }
+  function buildDistTicks(domainPc) {
+    const step = niceStep(domainPc / 5);
+    const ticks = [];
+    for (let v = 0; v <= domainPc; v += step) ticks.push(Math.round(v));
+    return ticks;
+  }
+
+  function fmt(val, digits) {
+    if (val === null || val === undefined || val === "" || isNaN(parseFloat(val))) {
+      return '<span class="na">&ndash;</span>';
+    }
+    return parseFloat(val).toFixed(digits);
+  }
+
+  // ============================================================
+  // 3. DOM ref stores (rebuilt on every switch) + cross-highlight
+  // ============================================================
   const heroRefs = {};
   const distRefs = {};
   const refRefs = {};
-  let viewer3DUpdate = null;
+  let viewer3DRefs = {};
 
-  // Hovering a star in either the distance chart or the reference panel
-  // highlights the SAME star in both, so you can track which dot is which.
   function setPairHighlight(name, on) {
     const d = distRefs[name], r = refRefs[name];
     [d, r].forEach(function (ref) {
@@ -709,27 +774,27 @@
     }
   }
 
-  // ---- Hero background star field (real RA/Dec positions, sized by V mag) ----
-  const HERO_STARS = [{"name": "ups Lib", "vmag": 3.59, "x": 287.4, "y": 360.0, "r": 5.5, "op": 1.0}, {"name": "42 Lib", "vmag": 4.96, "x": 303.6, "y": 297.2, "r": 3.6, "op": 0.67}, {"name": "36 Lib", "vmag": 5.14, "x": 275.5, "y": 358.7, "r": 3.35, "op": 0.62}, {"name": "nu. Lib", "vmag": 5.2, "x": 136.4, "y": 187.3, "r": 3.27, "op": 0.61}, {"name": "12 Lib", "vmag": 5.27, "x": 75.3, "y": 309.2, "r": 3.18, "op": 0.59}, {"name": "ksi02 Lib", "vmag": 5.45, "x": 87.4, "y": 116.9, "r": 2.92, "op": 0.55}, {"name": "zet04 Lib", "vmag": 5.5, "x": 267.0, "y": 196.0, "r": 2.85, "op": 0.54}, {"name": "HD 135534", "vmag": 5.51, "x": 184.8, "y": 276.6, "r": 2.84, "op": 0.53}, {"name": "HD 138413", "vmag": 5.52, "x": 265.5, "y": 237.0, "r": 2.83, "op": 0.53}, {"name": "zet01 Lib", "vmag": 5.63, "x": 243.8, "y": 194.0, "r": 2.68, "op": 0.5}, {"name": "HD 130529", "vmag": 5.69, "x": 50.4, "y": 303.5, "r": 2.59, "op": 0.49}, {"name": "zet03 Lib", "vmag": 5.81, "x": 255.8, "y": 192.5, "r": 2.43, "op": 0.46}, {"name": "HD 135051", "vmag": 5.86, "x": 172.5, "y": 331.8, "r": 2.36, "op": 0.45}, {"name": "HD 130157", "vmag": 6.03, "x": 40.0, "y": 261.0, "r": 2.11, "op": 0.4}, {"name": "omi Lib", "vmag": 6.14, "x": 207.9, "y": 177.0, "r": 1.96, "op": 0.38}, {"name": "26 Lib", "vmag": 6.17, "x": 175.8, "y": 209.3, "r": 1.92, "op": 0.37}, {"name": "HD 138105", "vmag": 6.19, "x": 255.5, "y": 252.3, "r": 1.89, "op": 0.37}, {"name": "HD 141853", "vmag": 6.21, "x": 360.0, "y": 156.5, "r": 1.87, "op": 0.36}, {"name": "HD 140986", "vmag": 6.25, "x": 335.7, "y": 40.0, "r": 1.82, "op": 0.35}, {"name": "10 Lib", "vmag": 6.26, "x": 63.0, "y": 217.8, "r": 1.8, "op": 0.35}];
+  // ============================================================
+  // 4. Renderers — each clears its own DOM/refs and rebuilds from STAR_BASE
+  // ============================================================
+  function renderHero() {
+    const field = document.getElementById('hero-star-field');
+    field.innerHTML = '';
+    Object.keys(heroRefs).forEach(function (k) { delete heroRefs[k]; });
 
-  const svgNS = "http://www.w3.org/2000/svg";
-
-  function renderStarField(containerId, points, glowId) {
-    const field = document.getElementById(containerId);
-    points.forEach(function (s) {
+    STAR_BASE.forEach(function (s) {
+      const p = heroXY(s.ra0, s.dec0);
       const g = document.createElementNS(svgNS, 'g');
 
       const glow = document.createElementNS(svgNS, 'circle');
-      glow.setAttribute('cx', s.x);
-      glow.setAttribute('cy', s.y);
+      glow.setAttribute('cx', p.x); glow.setAttribute('cy', p.y);
       glow.setAttribute('r', s.r * 3.2);
-      glow.setAttribute('fill', 'url(#' + glowId + ')');
+      glow.setAttribute('fill', 'url(#starGlow)');
       glow.setAttribute('opacity', s.op * 0.5);
       g.appendChild(glow);
 
       const dot = document.createElementNS(svgNS, 'circle');
-      dot.setAttribute('cx', s.x);
-      dot.setAttribute('cy', s.y);
+      dot.setAttribute('cx', p.x); dot.setAttribute('cy', p.y);
       dot.setAttribute('r', s.r);
       dot.setAttribute('fill', '#fdf6e3');
       dot.setAttribute('opacity', s.op);
@@ -744,148 +809,150 @@
 
       g.appendChild(dot);
       field.appendChild(g);
-
-      if (containerId === 'hero-star-field') {
-        heroRefs[s.name] = { dot: dot, glow: glow };
-      }
+      heroRefs[s.name] = { dot: dot, glow: glow };
     });
   }
 
-  renderStarField('hero-star-field', HERO_STARS, 'starGlow');
+  function cleanName(name) { return name; } // names already cleaned in the data prep
 
-  const tbody = document.getElementById('star-table-body');
-  STARS.forEach(function (s) {
-    const tr = document.createElement('tr');
-    tr.innerHTML =
-      '<td class="col-rank">' + s.rank + '</td>' +
-      '<td class="col-star">' + cleanName(s.main_id) + '</td>' +
-      '<td>' + fmt(s.ra, 3) + '</td>' +
-      '<td>' + fmt(s.dec, 3) + '</td>' +
-      '<td>' + fmt(s.plx_value, 2) + '</td>' +
-      '<td>' + fmt(s.pmra, 1) + '</td>' +
-      '<td>' + fmt(s.pmdec, 1) + '</td>' +
-      '<td>' + fmt(s.rvz_radvel, 1) + '</td>' +
-      '<td class="col-sp">' + (s.sp_type || '<span class="na">&ndash;</span>') + '</td>' +
-      '<td>' + fmt(s.bmag, 2) + '</td>' +
-      '<td>' + fmt(s.vmag, 2) + '</td>';
-    tbody.appendChild(tr);
-  });
+  function renderTable() {
+    const tbody = document.getElementById('star-table-body');
+    tbody.innerHTML = '';
+    STAR_BASE.forEach(function (s, i) {
+      const tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td class="col-rank">' + (i + 1) + '</td>' +
+        '<td class="col-star">' + s.name + '</td>' +
+        '<td>' + fmt(s.ra0, 3) + '</td>' +
+        '<td>' + fmt(s.dec0, 3) + '</td>' +
+        '<td>' + fmt(s.plx, 2) + '</td>' +
+        '<td>' + fmt(s.pmra, 1) + '</td>' +
+        '<td>' + fmt(s.pmdec, 1) + '</td>' +
+        '<td>' + fmt(s.rv, 1) + '</td>' +
+        '<td class="col-sp">' + (s.sp_type || '<span class="na">&ndash;</span>') + '</td>' +
+        '<td>' + fmt(s.bmag, 2) + '</td>' +
+        '<td>' + fmt(s.vmag, 2) + '</td>';
+      tbody.appendChild(tr);
+    });
+  }
 
-  // ---- Distance-from-Earth profile chart + reference constellation ----
-  // Both panels live in ONE <svg> (see the markup above) and were computed
-  // from the SAME dec -> y formula, so a star's row is guaranteed to align
-  // between the two panels — no cross-element measuring/syncing needed.
-  const DIST_POINTS = [{"name": "HD 130157", "vmag": 6.03, "dec": -21.32, "dist_pc": 384.7, "dist_ly": 1255.0, "x": 844.4, "y": 276.5, "r": 2.11, "op": 0.4}, {"name": "10 Lib", "vmag": 6.26, "dec": -18.36, "dist_pc": 327.0, "dist_ly": 1067.0, "x": 740.3, "y": 240.1, "r": 1.8, "op": 0.35}, {"name": "HD 130529", "vmag": 5.69, "dec": -24.25, "dist_pc": 321.3, "dist_ly": 1048.0, "x": 730.1, "y": 312.4, "r": 2.59, "op": 0.49}, {"name": "HD 135051", "vmag": 5.86, "dec": -26.19, "dist_pc": 279.4, "dist_ly": 911.0, "x": 654.4, "y": 336.2, "r": 2.36, "op": 0.45}, {"name": "26 Lib", "vmag": 6.17, "dec": -17.77, "dist_pc": 251.1, "dist_ly": 819.0, "x": 603.3, "y": 232.9, "r": 1.92, "op": 0.37}, {"name": "zet04 Lib", "vmag": 5.5, "dec": -16.85, "dist_pc": 230.8, "dist_ly": 753.0, "x": 566.7, "y": 221.6, "r": 2.85, "op": 0.54}, {"name": "HD 141853", "vmag": 6.21, "dec": -14.13, "dist_pc": 224.5, "dist_ly": 732.0, "x": 555.3, "y": 188.3, "r": 1.87, "op": 0.36}, {"name": "ksi02 Lib", "vmag": 5.45, "dec": -11.41, "dist_pc": 222.6, "dist_ly": 726.0, "x": 551.9, "y": 154.9, "r": 2.92, "op": 0.55}, {"name": "HD 140986", "vmag": 6.25, "dec": -6.12, "dist_pc": 219.2, "dist_ly": 715.0, "x": 545.7, "y": 90.0, "r": 1.82, "op": 0.35}, {"name": "zet01 Lib", "vmag": 5.63, "dec": -16.72, "dist_pc": 197.9, "dist_ly": 646.0, "x": 507.3, "y": 220.0, "r": 2.68, "op": 0.5}, {"name": "nu. Lib", "vmag": 5.2, "dec": -16.26, "dist_pc": 193.2, "dist_ly": 630.0, "x": 498.7, "y": 214.3, "r": 3.27, "op": 0.61}, {"name": "zet03 Lib", "vmag": 5.81, "dec": -16.61, "dist_pc": 152.4, "dist_ly": 497.0, "x": 425.0, "y": 218.6, "r": 2.43, "op": 0.46}, {"name": "HD 135534", "vmag": 5.51, "dec": -22.4, "dist_pc": 126.6, "dist_ly": 413.0, "x": 378.6, "y": 289.7, "r": 2.84, "op": 0.53}, {"name": "12 Lib", "vmag": 5.27, "dec": -24.64, "dist_pc": 122.1, "dist_ly": 398.0, "x": 370.4, "y": 317.2, "r": 3.18, "op": 0.59}, {"name": "42 Lib", "vmag": 4.96, "dec": -23.82, "dist_pc": 121.8, "dist_ly": 397.0, "x": 369.9, "y": 307.1, "r": 3.6, "op": 0.67}, {"name": "36 Lib", "vmag": 5.14, "dec": -28.05, "dist_pc": 106.6, "dist_ly": 348.0, "x": 342.4, "y": 358.9, "r": 3.35, "op": 0.62}, {"name": "HD 138413", "vmag": 5.52, "dec": -19.67, "dist_pc": 73.4, "dist_ly": 239.0, "x": 282.5, "y": 256.2, "r": 2.83, "op": 0.53}, {"name": "HD 138105", "vmag": 6.19, "dec": -20.73, "dist_pc": 70.1, "dist_ly": 229.0, "x": 276.5, "y": 269.2, "r": 1.89, "op": 0.37}, {"name": "ups Lib", "vmag": 3.59, "dec": -28.14, "dist_pc": 64.4, "dist_ly": 210.0, "x": 266.3, "y": 360.0, "r": 5.5, "op": 1.0}, {"name": "omi Lib", "vmag": 6.14, "dec": -15.55, "dist_pc": 56.9, "dist_ly": 186.0, "x": 252.8, "y": 205.6, "r": 1.96, "op": 0.38}];
+  function renderDistRefChart() {
+    const tickGroup = document.getElementById('dist-ticks');
+    const sightlineGroup = document.getElementById('dist-sightlines');
+    const distStarGroup = document.getElementById('dist-stars');
+    const refStarGroup = document.getElementById('ref-stars');
+    tickGroup.innerHTML = '';
+    sightlineGroup.innerHTML = '';
+    distStarGroup.innerHTML = '';
+    refStarGroup.innerHTML = '';
+    Object.keys(distRefs).forEach(function (k) { delete distRefs[k]; });
+    Object.keys(refRefs).forEach(function (k) { delete refRefs[k]; });
 
-  const REF_POINTS = [{"name": "ups Lib", "vmag": 3.59, "x": 1170.1, "y": 360.0, "r": 5.5, "op": 1.0}, {"name": "42 Lib", "vmag": 4.96, "x": 1181.2, "y": 307.1, "r": 3.6, "op": 0.67}, {"name": "36 Lib", "vmag": 5.14, "x": 1161.9, "y": 358.9, "r": 3.35, "op": 0.62}, {"name": "nu. Lib", "vmag": 5.2, "x": 1066.3, "y": 214.3, "r": 3.27, "op": 0.61}, {"name": "12 Lib", "vmag": 5.27, "x": 1024.3, "y": 317.2, "r": 3.18, "op": 0.59}, {"name": "ksi02 Lib", "vmag": 5.45, "x": 1032.6, "y": 154.9, "r": 2.92, "op": 0.55}, {"name": "zet04 Lib", "vmag": 5.5, "x": 1156.1, "y": 221.6, "r": 2.85, "op": 0.54}, {"name": "HD 135534", "vmag": 5.51, "x": 1099.6, "y": 289.7, "r": 2.84, "op": 0.53}, {"name": "HD 138413", "vmag": 5.52, "x": 1155.0, "y": 256.2, "r": 2.83, "op": 0.53}, {"name": "zet01 Lib", "vmag": 5.63, "x": 1140.1, "y": 220.0, "r": 2.68, "op": 0.5}, {"name": "HD 130529", "vmag": 5.69, "x": 1007.1, "y": 312.4, "r": 2.59, "op": 0.49}, {"name": "zet03 Lib", "vmag": 5.81, "x": 1148.4, "y": 218.6, "r": 2.43, "op": 0.46}, {"name": "HD 135051", "vmag": 5.86, "x": 1091.1, "y": 336.2, "r": 2.36, "op": 0.45}, {"name": "HD 130157", "vmag": 6.03, "x": 1000.0, "y": 276.5, "r": 2.11, "op": 0.4}, {"name": "omi Lib", "vmag": 6.14, "x": 1115.4, "y": 205.6, "r": 1.96, "op": 0.38}, {"name": "26 Lib", "vmag": 6.17, "x": 1093.4, "y": 232.9, "r": 1.92, "op": 0.37}, {"name": "HD 138105", "vmag": 6.19, "x": 1148.2, "y": 269.2, "r": 1.89, "op": 0.37}, {"name": "HD 141853", "vmag": 6.21, "x": 1220.0, "y": 188.3, "r": 1.87, "op": 0.36}, {"name": "HD 140986", "vmag": 6.25, "x": 1203.3, "y": 90.0, "r": 1.82, "op": 0.35}, {"name": "10 Lib", "vmag": 6.26, "x": 1015.8, "y": 240.1, "r": 1.8, "op": 0.35}];
+    // ticks
+    buildDistTicks(CHART_DOMAIN_PC).forEach(function (pc) {
+      const x = chartXFromDist(pc);
+      const ly = Math.round(pc * 3.26156);
 
-  const DIST_TICKS = [{"pc": 0, "ly": 0, "x": 150.0}, {"pc": 50, "ly": 163, "x": 240.3}, {"pc": 100, "ly": 326, "x": 330.5}, {"pc": 150, "ly": 489, "x": 420.8}, {"pc": 200, "ly": 652, "x": 511.0}, {"pc": 250, "ly": 815, "x": 601.3}, {"pc": 300, "ly": 978, "x": 691.6}, {"pc": 350, "ly": 1142, "x": 781.8}, {"pc": 400, "ly": 1305, "x": 872.1}];
+      const line = document.createElementNS(svgNS, 'line');
+      line.setAttribute('x1', x); line.setAttribute('x2', x);
+      line.setAttribute('y1', 360); line.setAttribute('y2', 368);
+      line.setAttribute('class', 'dist-tick-line');
+      tickGroup.appendChild(line);
 
-  const tickGroup = document.getElementById('dist-ticks');
-  DIST_TICKS.forEach(function (t) {
-    const line = document.createElementNS(svgNS, 'line');
-    line.setAttribute('x1', t.x); line.setAttribute('x2', t.x);
-    line.setAttribute('y1', 360); line.setAttribute('y2', 368);
-    line.setAttribute('class', 'dist-tick-line');
-    tickGroup.appendChild(line);
+      const pcLabel = document.createElementNS(svgNS, 'text');
+      pcLabel.setAttribute('x', x); pcLabel.setAttribute('y', 383);
+      pcLabel.setAttribute('class', 'dist-tick-pc');
+      pcLabel.textContent = pc + ' pc';
+      tickGroup.appendChild(pcLabel);
 
-    const pcLabel = document.createElementNS(svgNS, 'text');
-    pcLabel.setAttribute('x', t.x); pcLabel.setAttribute('y', 383);
-    pcLabel.setAttribute('class', 'dist-tick-pc');
-    pcLabel.textContent = t.pc + ' pc';
-    tickGroup.appendChild(pcLabel);
+      const lyLabel = document.createElementNS(svgNS, 'text');
+      lyLabel.setAttribute('x', x); lyLabel.setAttribute('y', 404);
+      lyLabel.setAttribute('class', 'dist-tick-ly');
+      lyLabel.textContent = ly.toLocaleString() + ' ly';
+      tickGroup.appendChild(lyLabel);
+    });
 
-    const lyLabel = document.createElementNS(svgNS, 'text');
-    lyLabel.setAttribute('x', t.x); lyLabel.setAttribute('y', 404);
-    lyLabel.setAttribute('class', 'dist-tick-ly');
-    lyLabel.textContent = t.ly.toLocaleString() + ' ly';
-    tickGroup.appendChild(lyLabel);
-  });
+    // distance panel + reference panel stars
+    STAR_BASE.forEach(function (s) {
+      const y = chartYFromDec(s.dec0);
+      const distX = chartXFromDist(s.dist_pc);
+      const refX = refXFromRa(s.ra0);
 
-  const sightlineGroup = document.getElementById('dist-sightlines');
-  const distStarGroup = document.getElementById('dist-stars');
+      // sightline
+      const line = document.createElementNS(svgNS, 'line');
+      line.setAttribute('x1', 150); line.setAttribute('y1', y);
+      line.setAttribute('x2', distX); line.setAttribute('y2', y);
+      line.setAttribute('class', 'dist-sightline');
+      sightlineGroup.appendChild(line);
 
-  DIST_POINTS.forEach(function (s) {
-    // horizontal sightline from the Earth axis out to the star, at its own declination height
-    const line = document.createElementNS(svgNS, 'line');
-    line.setAttribute('x1', 150); line.setAttribute('y1', s.y);
-    line.setAttribute('x2', s.x); line.setAttribute('y2', s.y);
-    line.setAttribute('class', 'dist-sightline');
-    sightlineGroup.appendChild(line);
+      // distance-panel star
+      const dg = document.createElementNS(svgNS, 'g');
+      const dGlow = document.createElementNS(svgNS, 'circle');
+      dGlow.setAttribute('cx', distX); dGlow.setAttribute('cy', y);
+      dGlow.setAttribute('r', s.r * 3.2);
+      dGlow.setAttribute('fill', 'url(#distGlow)');
+      dGlow.setAttribute('opacity', s.op * 0.5);
+      dg.appendChild(dGlow);
 
-    const g = document.createElementNS(svgNS, 'g');
+      const dDot = document.createElementNS(svgNS, 'circle');
+      dDot.setAttribute('cx', distX); dDot.setAttribute('cy', y);
+      dDot.setAttribute('r', s.r);
+      dDot.setAttribute('fill', '#fdf6e3');
+      dDot.setAttribute('opacity', s.op);
+      dDot.setAttribute('class', 'dist-star');
 
-    const glow = document.createElementNS(svgNS, 'circle');
-    glow.setAttribute('cx', s.x); glow.setAttribute('cy', s.y);
-    glow.setAttribute('r', s.r * 3.2);
-    glow.setAttribute('fill', 'url(#distGlow)');
-    glow.setAttribute('opacity', s.op * 0.5);
-    g.appendChild(glow);
+      const dTitle = document.createElementNS(svgNS, 'title');
+      const distLy = Math.round(s.dist_pc * 3.26156);
+      dTitle.textContent = s.name + '  \u2014  ' + s.dist_pc.toFixed(1) + ' pc (' +
+        distLy.toLocaleString() + ' ly)  \u2014  Dec ' + s.dec0.toFixed(2) + '\u00b0  \u2014  V ' + s.vmag.toFixed(2);
+      dDot.appendChild(dTitle);
 
-    const dot = document.createElementNS(svgNS, 'circle');
-    dot.setAttribute('cx', s.x); dot.setAttribute('cy', s.y);
-    dot.setAttribute('r', s.r);
-    dot.setAttribute('fill', '#fdf6e3');
-    dot.setAttribute('opacity', s.op);
-    dot.setAttribute('class', 'dist-star');
+      dDot.addEventListener('mouseenter', function () { setPairHighlight(s.name, true); });
+      dDot.addEventListener('mouseleave', function () { setPairHighlight(s.name, false); });
 
-    const title = document.createElementNS(svgNS, 'title');
-    title.textContent = s.name + '  \u2014  ' + s.dist_pc + ' pc (' + s.dist_ly.toLocaleString() +
-      ' ly)  \u2014  Dec ' + s.dec + '\u00b0  \u2014  V ' + s.vmag.toFixed(2);
-    dot.appendChild(title);
+      dg.appendChild(dDot);
+      distStarGroup.appendChild(dg);
+      distRefs[s.name] = { dot: dDot, glow: dGlow, sightline: line, title: dTitle, r: s.r };
 
-    dot.addEventListener('mouseenter', function () { setPairHighlight(s.name, true); });
-    dot.addEventListener('mouseleave', function () { setPairHighlight(s.name, false); });
+      // reference-panel star
+      const rg = document.createElementNS(svgNS, 'g');
+      const rGlow = document.createElementNS(svgNS, 'circle');
+      rGlow.setAttribute('cx', refX); rGlow.setAttribute('cy', y);
+      rGlow.setAttribute('r', s.r * 3.2);
+      rGlow.setAttribute('fill', 'url(#distGlow)');
+      rGlow.setAttribute('opacity', s.op * 0.5);
+      rg.appendChild(rGlow);
 
-    g.appendChild(dot);
-    distStarGroup.appendChild(g);
+      const rDot = document.createElementNS(svgNS, 'circle');
+      rDot.setAttribute('cx', refX); rDot.setAttribute('cy', y);
+      rDot.setAttribute('r', s.r);
+      rDot.setAttribute('fill', '#fdf6e3');
+      rDot.setAttribute('opacity', s.op);
+      rDot.setAttribute('class', 'dist-star');
 
-    distRefs[s.name] = { dot: dot, glow: glow, sightline: line, title: title, r: s.r };
-  });
+      const rTitle = document.createElementNS(svgNS, 'title');
+      rTitle.textContent = s.name + '  \u2014  V ' + s.vmag.toFixed(2);
+      rDot.appendChild(rTitle);
 
-  // reference constellation panel, in the same svg, sharing the same glow def
-  const refStarGroup = document.getElementById('ref-stars');
-  REF_POINTS.forEach(function (s) {
-    const g = document.createElementNS(svgNS, 'g');
+      rDot.addEventListener('mouseenter', function () { setPairHighlight(s.name, true); });
+      rDot.addEventListener('mouseleave', function () { setPairHighlight(s.name, false); });
 
-    const glow = document.createElementNS(svgNS, 'circle');
-    glow.setAttribute('cx', s.x); glow.setAttribute('cy', s.y);
-    glow.setAttribute('r', s.r * 3.2);
-    glow.setAttribute('fill', 'url(#distGlow)');
-    glow.setAttribute('opacity', s.op * 0.5);
-    g.appendChild(glow);
+      rg.appendChild(rDot);
+      refStarGroup.appendChild(rg);
+      refRefs[s.name] = { dot: rDot, glow: rGlow, r: s.r };
+    });
+  }
 
-    const dot = document.createElementNS(svgNS, 'circle');
-    dot.setAttribute('cx', s.x); dot.setAttribute('cy', s.y);
-    dot.setAttribute('r', s.r);
-    dot.setAttribute('fill', '#fdf6e3');
-    dot.setAttribute('opacity', s.op);
-    dot.setAttribute('class', 'dist-star');
+  // ============================================================
+  // 5. 3D viewer — scene/camera/renderer/controls set up ONCE;
+  //    only the star/Earth/arrow content rebuilds per constellation
+  // ============================================================
+  let viewer3DReady = false;
+  let scene, camera, renderer, world, lineMat, pickables = [];
+  let dragging = false;
 
-    const title = document.createElementNS(svgNS, 'title');
-    title.textContent = s.name + '  \u2014  V ' + s.vmag.toFixed(2);
-    dot.appendChild(title);
-
-    dot.addEventListener('mouseenter', function () { setPairHighlight(s.name, true); });
-    dot.addEventListener('mouseleave', function () { setPairHighlight(s.name, false); });
-
-    g.appendChild(dot);
-    refStarGroup.appendChild(g);
-
-    refRefs[s.name] = { dot: dot, glow: glow, r: s.r };
-  });
-
-  // ---- 3D viewer ----
-  const STARS_3D = [{"name": "ups Lib", "vmag": 3.59, "dist_pc": 64.4, "sp_type": "K3.5III", "color": "#ffd2a1", "x": 4.135, "y": 1.512, "z": 4.292, "r": 2.6}, {"name": "42 Lib", "vmag": 4.96, "dist_pc": 121.8, "sp_type": "K3-IIICN2", "color": "#ffd2a1", "x": 2.603, "y": 0.57, "z": 2.028, "r": 1.73}, {"name": "36 Lib", "vmag": 5.14, "dist_pc": 106.6, "sp_type": "K2/3III", "color": "#ffd2a1", "x": 3.007, "y": 0.525, "z": 2.81, "r": 1.61}, {"name": "nu. Lib", "vmag": 5.2, "dist_pc": 193.2, "sp_type": "K5-III", "color": "#ffd2a1", "x": -0.57, "y": 0.327, "z": -0.146, "r": 1.57}, {"name": "12 Lib", "vmag": 5.27, "dist_pc": 122.1, "sp_type": "K2/3III", "color": "#ffd2a1", "x": 1.774, "y": 0.485, "z": 2.771, "r": 1.53}, {"name": "ksi02 Lib", "vmag": 5.45, "dist_pc": 222.6, "sp_type": "K4III", "color": "#ffd2a1", "x": -2.03, "y": 0.828, "z": -1.009, "r": 1.42}, {"name": "zet04 Lib", "vmag": 5.5, "dist_pc": 230.8, "sp_type": "B3V", "color": "#aabfff", "x": -0.818, "y": -0.316, "z": -2.251, "r": 1.38}, {"name": "HD 135534", "vmag": 5.51, "dist_pc": 126.6, "sp_type": "K2III", "color": "#ffd2a1", "x": 1.961, "y": 0.618, "z": 2.173, "r": 1.38}, {"name": "HD 138413", "vmag": 5.52, "dist_pc": 73.4, "sp_type": "A2IV", "color": "#cad7ff", "x": 3.722, "y": 1.795, "z": 3.832, "r": 1.37}, {"name": "zet01 Lib", "vmag": 5.63, "dist_pc": 197.9, "sp_type": "K4.5III", "color": "#ffd2a1", "x": -0.033, "y": 0.184, "z": -0.878, "r": 1.3}, {"name": "HD 130529", "vmag": 5.69, "dist_pc": 321.3, "sp_type": "K3III+G", "color": "#ffd2a1", "x": -5.036, "y": -3.569, "z": -3.267, "r": 1.26}, {"name": "zet03 Lib", "vmag": 5.81, "dist_pc": 152.4, "sp_type": "K0III", "color": "#ffd2a1", "x": 1.367, "y": 0.853, "z": 0.792, "r": 1.19}, {"name": "HD 135051", "vmag": 5.86, "dist_pc": 279.4, "sp_type": "G8/K0II", "color": "#fff4ea", "x": -2.517, "y": -3.136, "z": -2.787, "r": 1.16}, {"name": "HD 130157", "vmag": 6.03, "dist_pc": 384.7, "sp_type": "K4/5III", "color": "#ffd2a1", "x": -7.562, "y": -3.964, "z": -5.347, "r": 1.04}, {"name": "omi Lib", "vmag": 6.14, "dist_pc": 56.9, "sp_type": "F2V", "color": "#f8f7ff", "x": 4.04, "y": 2.267, "z": 4.488, "r": 0.97}, {"name": "26 Lib", "vmag": 6.17, "dist_pc": 251.1, "sp_type": "B9III", "color": "#aabfff", "x": -2.107, "y": -0.801, "z": -2.377, "r": 0.96}, {"name": "HD 138105", "vmag": 6.19, "dist_pc": 70.1, "sp_type": "A3V", "color": "#cad7ff", "x": 3.806, "y": 1.79, "z": 3.992, "r": 0.94}, {"name": "HD 141853", "vmag": 6.21, "dist_pc": 224.5, "sp_type": "G8III", "color": "#fff4ea", "x": 0.011, "y": 0.289, "z": -2.626, "r": 0.93}, {"name": "HD 140986", "vmag": 6.25, "dist_pc": 219.2, "sp_type": "K0III", "color": "#ffd2a1", "x": -0.19, "y": 1.862, "z": -2.509, "r": 0.91}, {"name": "10 Lib", "vmag": 6.26, "dist_pc": 327.0, "sp_type": "K0II/III", "color": "#ffd2a1", "x": -5.563, "y": -2.119, "z": -3.98, "r": 0.9}];
-
-  // Earth's position relative to the star field's centroid (which now
-  // sits at the local origin, so drag-rotation pivots on "being among
-  // the stars" rather than swinging around Earth off at the cluster's edge).
-  const EARTH_REL = { x: 5.794, y: 3.03, z: 6.597 };
-
-  (function initViewer3D() {
+  function initViewer3DScene() {
     const container = document.getElementById('viewer3d-canvas');
-    const tooltip = document.getElementById('viewer3d-tooltip');
     if (!container) return;
     if (typeof THREE === 'undefined') {
       container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;' +
@@ -896,92 +963,20 @@
     }
 
     const bgColor = 0x0b0f24;
-    const scene = new THREE.Scene();
+    scene = new THREE.Scene();
     scene.background = new THREE.Color(bgColor);
-    scene.fog = new THREE.Fog(bgColor, 14, 70);
+    scene.fog = new THREE.Fog(bgColor, 14, 400);
 
-    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 300);
+    camera = new THREE.PerspectiveCamera(45, 1, 0.1, 2000);
     camera.position.set(2, 3, 26);
     camera.lookAt(0, 0, 0);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
     container.appendChild(renderer.domElement);
 
-    // Everything (stars + Earth + sightlines) lives in this group, which
-    // is centered on the star field's centroid — so rotating it shows
-    // how the constellation looks from within/near the stars themselves.
-    const world = new THREE.Group();
+    world = new THREE.Group();
     scene.add(world);
-
-    // Earth marker, positioned at its true relative offset from the centroid
-    const earthPos = new THREE.Vector3(EARTH_REL.x, EARTH_REL.y, EARTH_REL.z);
-    const earthGeo = new THREE.SphereGeometry(0.16, 20, 20);
-    const earthMat = new THREE.MeshBasicMaterial({ color: 0x4caf7a });
-    const earthMesh = new THREE.Mesh(earthGeo, earthMat);
-    earthMesh.position.copy(earthPos);
-    world.add(earthMesh);
-
-    const earthGlowGeo = new THREE.SphereGeometry(0.32, 20, 20);
-    const earthGlowMat = new THREE.MeshBasicMaterial({ color: 0x4caf7a, transparent: true, opacity: 0.2 });
-    const earthGlowMesh = new THREE.Mesh(earthGlowGeo, earthGlowMat);
-    earthGlowMesh.position.copy(earthPos);
-    world.add(earthGlowMesh);
-
-    // A clear directional arrow from the center of the star field to Earth
-    const toEarthDir = earthPos.clone().normalize();
-    const arrow = new THREE.ArrowHelper(toEarthDir, new THREE.Vector3(0, 0, 0), earthPos.length(), 0x4caf7a, 0.5, 0.25);
-    world.add(arrow);
-
-    const lineMat = new THREE.LineBasicMaterial({ color: 0xc9a24b, transparent: true, opacity: 0.16 });
-    const pickables = [];
-    const viewer3DRefs = {};
-
-    STARS_3D.forEach(function (s) {
-      const geo = new THREE.SphereGeometry(s.r * 0.08, 16, 16);
-      const mat = new THREE.MeshBasicMaterial({ color: new THREE.Color(s.color) });
-      const mesh = new THREE.Mesh(geo, mat);
-      mesh.position.set(s.x, s.y, s.z);
-      mesh.userData = s;
-      world.add(mesh);
-      pickables.push(mesh);
-
-      const glowGeo = new THREE.SphereGeometry(s.r * 0.08 * 1.8, 12, 12);
-      const glowMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(s.color), transparent: true, opacity: 0.2 });
-      const glowMesh = new THREE.Mesh(glowGeo, glowMat);
-      glowMesh.position.copy(mesh.position);
-      world.add(glowMesh);
-
-      // true line of sight from Earth to this star
-      const points = [earthPos.clone(), mesh.position.clone()];
-      const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
-      const line = new THREE.Line(lineGeo, lineMat);
-      world.add(line);
-
-      viewer3DRefs[s.name] = { mesh: mesh, glowMesh: glowMesh, line: line };
-    });
-
-    // Called by the time slider: recomputes each star's true 3D position at
-    // a given year offset — RA/Dec propagated by proper motion, distance
-    // propagated by radial velocity — relative to the SAME fixed centroid
-    // used at setup, so the pivot never drifts.
-    function updateViewer3D(years) {
-      STAR_BASE.forEach(function (s) {
-        const rd = propagate(s, years);
-        const p = pos3DFromRaDec(rd.ra, rd.dec, rd.dist_pc);
-        const ref = viewer3DRefs[s.name];
-        if (!ref) return;
-        ref.mesh.position.set(p.x, p.y, p.z);
-        ref.glowMesh.position.set(p.x, p.y, p.z);
-        const posAttr = ref.line.geometry.attributes.position;
-        posAttr.setXYZ(1, p.x, p.y, p.z);
-        posAttr.needsUpdate = true;
-      });
-    }
-    viewer3DUpdate = updateViewer3D;
-
-    // subtle starting tilt so it doesn't read as a flat cross-section
-    world.rotation.x = -0.15;
-    world.rotation.y = 0.5;
+    lineMat = new THREE.LineBasicMaterial({ color: 0xc9a24b, transparent: true, opacity: 0.16 });
 
     function resize() {
       const w = container.clientWidth, h = container.clientHeight;
@@ -993,7 +988,7 @@
     window.addEventListener('resize', resize);
 
     // ---- manual drag-to-rotate ----
-    let dragging = false, lastX = 0, lastY = 0;
+    let lastX = 0, lastY = 0;
     container.addEventListener('pointerdown', function (e) {
       dragging = true;
       lastX = e.clientX; lastY = e.clientY;
@@ -1016,11 +1011,12 @@
     container.addEventListener('wheel', function (e) {
       e.preventDefault();
       const dist = camera.position.length();
-      const next = THREE.MathUtils.clamp(dist + e.deltaY * 0.02, 6, 60);
+      const next = THREE.MathUtils.clamp(dist + e.deltaY * (dist * 0.002), CAM_DIST * 0.15, CAM_DIST * 6);
       camera.position.setLength(next);
     }, { passive: false });
 
     // ---- hover picking for tooltip ----
+    const tooltip = document.getElementById('viewer3d-tooltip');
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     container.addEventListener('pointermove', function (e) {
@@ -1033,7 +1029,7 @@
       if (hits.length) {
         const s = hits[0].object.userData;
         tooltip.innerHTML = '<span class="t-name">' + s.name + '</span><br>' +
-          s.dist_pc + ' pc &middot; V ' + s.vmag.toFixed(2) + ' &middot; ' + s.sp_type;
+          s.dist_pc.toFixed(1) + ' pc &middot; V ' + s.vmag.toFixed(2) + ' &middot; ' + (s.sp_type || '\u2013');
         tooltip.style.left = (e.clientX - rect.left) + 'px';
         tooltip.style.top = (e.clientY - rect.top) + 'px';
         tooltip.style.display = 'block';
@@ -1055,116 +1051,241 @@
       renderer.render(scene, camera);
     }
     animate();
-  })();
 
-  // ---- Time slider wiring: drives hero map, distance/reference chart, and 3D viewer ----
-  (function initTimeSlider() {
-    const rangeEls = Array.from(document.querySelectorAll('.time-range'));
-    const readoutEls = Array.from(document.querySelectorAll('.time-readout'));
-    const playBtns = Array.from(document.querySelectorAll('.time-play-btn'));
-    if (!rangeEls.length) return;
+    viewer3DReady = true;
+  }
 
-    const YEAR_MIN = -300000, YEAR_MAX = 1000000;
-    const YEARS_PER_SECOND = 60000; // full round trip ~43s
+  // Clears and rebuilds only the star/Earth/arrow content of the 3D scene
+  // for the current constellation, keeping scene/camera/renderer alive.
+  function rebuildViewer3DStars() {
+    if (!viewer3DReady) return;
 
-    function formatYears(y) {
-      const rounded = Math.round(y);
-      if (rounded === 0) return 'Now';
-      const abs = Math.abs(rounded).toLocaleString();
-      let label = (rounded > 0 ? '+' : '\u2212') + abs + ' yr ' + (rounded > 0 ? 'from now' : 'ago');
-      if (rounded === YEAR_MIN) label += ' \u2014 dawn of Homo sapiens';
-      return label;
-    }
+    while (world.children.length) world.remove(world.children[0]);
+    pickables = [];
+    viewer3DRefs = {};
 
-    function updateHero(years) {
-      STAR_BASE.forEach(function (s) {
-        const rd = propagate(s, years);
-        const p = heroXY(rd.ra, rd.dec);
-        const ref = heroRefs[s.name];
-        if (!ref) return;
-        ref.dot.setAttribute('cx', p.x); ref.dot.setAttribute('cy', p.y);
-        ref.glow.setAttribute('cx', p.x); ref.glow.setAttribute('cy', p.y);
-      });
-    }
+    const earthPos = new THREE.Vector3(EARTH_REL.x, EARTH_REL.y, EARTH_REL.z);
+    const earthGeo = new THREE.SphereGeometry(0.16, 20, 20);
+    const earthMat = new THREE.MeshBasicMaterial({ color: 0x4caf7a });
+    const earthMesh = new THREE.Mesh(earthGeo, earthMat);
+    earthMesh.position.copy(earthPos);
+    world.add(earthMesh);
 
-    function updateChart(years) {
-      STAR_BASE.forEach(function (s) {
-        const rd = propagate(s, years);
-        const y = chartYFromDec(rd.dec);
+    const earthGlowGeo = new THREE.SphereGeometry(0.32, 20, 20);
+    const earthGlowMat = new THREE.MeshBasicMaterial({ color: 0x4caf7a, transparent: true, opacity: 0.2 });
+    const earthGlowMesh = new THREE.Mesh(earthGlowGeo, earthGlowMat);
+    earthGlowMesh.position.copy(earthPos);
+    world.add(earthGlowMesh);
 
-        const dRef = distRefs[s.name];
-        if (dRef) {
-          const x = chartXFromDist(rd.dist_pc);
-          dRef.dot.setAttribute('cx', x); dRef.dot.setAttribute('cy', y);
-          dRef.glow.setAttribute('cx', x); dRef.glow.setAttribute('cy', y);
-          dRef.sightline.setAttribute('y1', y);
-          dRef.sightline.setAttribute('y2', y);
-          dRef.sightline.setAttribute('x2', x);
-          if (dRef.title) {
-            const distLy = Math.round(rd.dist_pc * 3.26156);
-            dRef.title.textContent = s.name + '  \u2014  ' + rd.dist_pc.toFixed(1) + ' pc (' +
-              distLy.toLocaleString() + ' ly)  \u2014  Dec ' + rd.dec.toFixed(2) + '\u00b0  \u2014  V ' + s.vmag.toFixed(2);
-          }
-        }
-        const rRef = refRefs[s.name];
-        if (rRef) {
-          const x = refXFromRa(rd.ra);
-          rRef.dot.setAttribute('cx', x); rRef.dot.setAttribute('cy', y);
-          rRef.glow.setAttribute('cx', x); rRef.glow.setAttribute('cy', y);
-        }
-      });
-    }
+    const toEarthDir = earthPos.clone().normalize();
+    const arrowLen = Math.max(earthPos.length(), 0.001);
+    const arrow = new THREE.ArrowHelper(toEarthDir, new THREE.Vector3(0, 0, 0), arrowLen, 0x4caf7a,
+      Math.min(0.5, arrowLen * 0.3), Math.min(0.25, arrowLen * 0.15));
+    world.add(arrow);
 
-    // Keeps every slider/readout/play-button on the page (main + the mini
-    // one docked on the 3D viewer) showing the same value.
-    function applyYears(years, sourceEl) {
-      updateHero(years);
-      updateChart(years);
-      if (viewer3DUpdate) viewer3DUpdate(years);
-      const label = formatYears(years);
-      rangeEls.forEach(function (el) { if (el !== sourceEl) el.value = years; });
-      readoutEls.forEach(function (el) { el.textContent = label; });
-    }
+    STAR_BASE.forEach(function (s) {
+      const p = pos3DFromRaDec(s.ra0, s.dec0, s.dist_pc);
 
-    rangeEls.forEach(function (el) {
-      el.addEventListener('input', function () {
-        applyYears(parseFloat(el.value), el);
-      });
+      const geo = new THREE.SphereGeometry(s.r * 0.08, 16, 16);
+      const mat = new THREE.MeshBasicMaterial({ color: new THREE.Color(s.color) });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.position.set(p.x, p.y, p.z);
+      mesh.userData = s;
+      world.add(mesh);
+      pickables.push(mesh);
+
+      const glowGeo = new THREE.SphereGeometry(s.r * 0.08 * 1.8, 12, 12);
+      const glowMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(s.color), transparent: true, opacity: 0.2 });
+      const glowMesh = new THREE.Mesh(glowGeo, glowMat);
+      glowMesh.position.copy(mesh.position);
+      world.add(glowMesh);
+
+      const points = [earthPos.clone(), mesh.position.clone()];
+      const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
+      const line = new THREE.Line(lineGeo, lineMat);
+      world.add(line);
+
+      viewer3DRefs[s.name] = { mesh: mesh, glowMesh: glowMesh, line: line };
     });
 
-    let playing = false, playDir = 1, lastTs = null;
+    world.rotation.x = -0.15;
+    world.rotation.y = 0.5;
+    camera.position.set(CAM_DIST * 0.08, CAM_DIST * 0.12, CAM_DIST);
+    camera.lookAt(0, 0, 0);
+  }
 
-    function setPlayingUI(isPlaying) {
-      playBtns.forEach(function (btn) {
-        btn.innerHTML = isPlaying ? '&#10074;&#10074;' : '&#9658;';
-        btn.setAttribute('aria-label', isPlaying ? 'Pause' : 'Play');
-        btn.setAttribute('title', isPlaying ? 'Pause' : 'Play');
-      });
-    }
+  function updateViewer3D(years) {
+    if (!viewer3DReady) return;
+    STAR_BASE.forEach(function (s) {
+      const rd = propagate(s, years);
+      const p = pos3DFromRaDec(rd.ra, rd.dec, rd.dist_pc);
+      const ref = viewer3DRefs[s.name];
+      if (!ref) return;
+      ref.mesh.position.set(p.x, p.y, p.z);
+      ref.glowMesh.position.set(p.x, p.y, p.z);
+      const posAttr = ref.line.geometry.attributes.position;
+      posAttr.setXYZ(1, p.x, p.y, p.z);
+      posAttr.needsUpdate = true;
+    });
+  }
 
-    function playFrame(ts) {
-      if (!playing) return;
-      if (lastTs === null) lastTs = ts;
-      const dt = (ts - lastTs) / 1000;
-      lastTs = ts;
-      let val = parseFloat(rangeEls[0].value) + playDir * YEARS_PER_SECOND * dt;
-      if (val >= YEAR_MAX) { val = YEAR_MAX; playDir = -1; }
-      if (val <= YEAR_MIN) { val = YEAR_MIN; playDir = 1; }
-      applyYears(val, null);
-      requestAnimationFrame(playFrame);
-    }
+  // ============================================================
+  // 6. Time slider (page-wide, persists across constellation switches)
+  // ============================================================
+  const YEAR_MIN = -300000, YEAR_MAX = 1000000;
+  const YEARS_PER_SECOND = 60000; // full round trip ~43s
+  const rangeEls = Array.from(document.querySelectorAll('.time-range'));
+  const readoutEls = Array.from(document.querySelectorAll('.time-readout'));
+  const playBtns = Array.from(document.querySelectorAll('.time-play-btn'));
+  let playing = false, playDir = 1, lastTs = null;
 
+  function formatYears(y) {
+    const rounded = Math.round(y);
+    if (rounded === 0) return 'Now';
+    const abs = Math.abs(rounded).toLocaleString();
+    let label = (rounded > 0 ? '+' : '\u2212') + abs + ' yr ' + (rounded > 0 ? 'from now' : 'ago');
+    if (rounded === YEAR_MIN) label += ' \u2014 dawn of Homo sapiens';
+    return label;
+  }
+
+  function updateHero(years) {
+    STAR_BASE.forEach(function (s) {
+      const rd = propagate(s, years);
+      const p = heroXY(rd.ra, rd.dec);
+      const ref = heroRefs[s.name];
+      if (!ref) return;
+      ref.dot.setAttribute('cx', p.x); ref.dot.setAttribute('cy', p.y);
+      ref.glow.setAttribute('cx', p.x); ref.glow.setAttribute('cy', p.y);
+    });
+  }
+
+  function updateChart(years) {
+    STAR_BASE.forEach(function (s) {
+      const rd = propagate(s, years);
+      const y = chartYFromDec(rd.dec);
+
+      const dRef = distRefs[s.name];
+      if (dRef) {
+        const x = chartXFromDist(rd.dist_pc);
+        dRef.dot.setAttribute('cx', x); dRef.dot.setAttribute('cy', y);
+        dRef.glow.setAttribute('cx', x); dRef.glow.setAttribute('cy', y);
+        dRef.sightline.setAttribute('y1', y);
+        dRef.sightline.setAttribute('y2', y);
+        dRef.sightline.setAttribute('x2', x);
+        if (dRef.title) {
+          const distLy = Math.round(rd.dist_pc * 3.26156);
+          dRef.title.textContent = s.name + '  \u2014  ' + rd.dist_pc.toFixed(1) + ' pc (' +
+            distLy.toLocaleString() + ' ly)  \u2014  Dec ' + rd.dec.toFixed(2) + '\u00b0  \u2014  V ' + s.vmag.toFixed(2);
+        }
+      }
+      const rRef = refRefs[s.name];
+      if (rRef) {
+        const x = refXFromRa(rd.ra);
+        rRef.dot.setAttribute('cx', x); rRef.dot.setAttribute('cy', y);
+        rRef.glow.setAttribute('cx', x); rRef.glow.setAttribute('cy', y);
+      }
+    });
+  }
+
+  function applyYears(years, sourceEl) {
+    updateHero(years);
+    updateChart(years);
+    updateViewer3D(years);
+    const label = formatYears(years);
+    rangeEls.forEach(function (el) { if (el !== sourceEl) el.value = years; });
+    readoutEls.forEach(function (el) { el.textContent = label; });
+  }
+
+  rangeEls.forEach(function (el) {
+    el.addEventListener('input', function () {
+      applyYears(parseFloat(el.value), el);
+    });
+  });
+
+  function setPlayingUI(isPlaying) {
     playBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        playing = !playing;
-        setPlayingUI(playing);
-        if (playing) {
-          lastTs = null;
-          requestAnimationFrame(playFrame);
-        }
-      });
+      btn.innerHTML = isPlaying ? '&#10074;&#10074;' : '&#9658;';
+      btn.setAttribute('aria-label', isPlaying ? 'Pause' : 'Play');
+      btn.setAttribute('title', isPlaying ? 'Pause' : 'Play');
     });
-  })();
+  }
+
+  function playFrame(ts) {
+    if (!playing) return;
+    if (lastTs === null) lastTs = ts;
+    const dt = (ts - lastTs) / 1000;
+    lastTs = ts;
+    let val = parseFloat(rangeEls[0].value) + playDir * YEARS_PER_SECOND * dt;
+    if (val >= YEAR_MAX) { val = YEAR_MAX; playDir = -1; }
+    if (val <= YEAR_MIN) { val = YEAR_MIN; playDir = 1; }
+    applyYears(val, null);
+    requestAnimationFrame(playFrame);
+  }
+
+  playBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      playing = !playing;
+      setPlayingUI(playing);
+      if (playing) {
+        lastTs = null;
+        requestAnimationFrame(playFrame);
+      }
+    });
+  });
+
+  function resetTimeToNow() {
+    rangeEls.forEach(function (el) { el.value = 0; });
+    readoutEls.forEach(function (el) { el.textContent = 'Now'; });
+  }
+
+  // ============================================================
+  // 7. Constellation switching
+  // ============================================================
+  function loadConstellation(name) {
+    const c = ZODIAC.data[name];
+    if (!c) return;
+
+    STAR_BASE = c.stars;
+    RA_MIN = c.ra_min; RA_MAX = c.ra_max;
+    DEC_MIN = c.dec_min; DEC_MAX = c.dec_max;
+    CHART_DOMAIN_PC = c.domain_pc;
+    CENTROID_3D = c.centroid;
+    EARTH_REL = { x: -c.centroid.x, y: -c.centroid.z, z: -c.centroid.y };
+    CAM_DIST = c.cam_dist;
+
+    renderHero();
+    renderTable();
+    renderDistRefChart();
+    rebuildViewer3DStars();
+
+    document.getElementById('hero-title').innerHTML = 'The Stars of <em>' + name + '</em>';
+    document.getElementById('hero-sub').textContent =
+      'The twenty brightest stars of the constellation ' + name + ', catalogued from SIMBAD.';
+    document.getElementById('catalog-title').textContent = 'Catalog of the Twenty Brightest Stars in ' + name;
+    document.getElementById('viewer3d-title').textContent = name + ' in Three Dimensions';
+    document.getElementById('page-title').textContent = name + ': A Stellar Survey';
+    document.getElementById('const-nav-label').textContent =
+      (currentIndex + 1) + ' / ' + ZODIAC_ORDER.length + ' \u00b7 ' + name.toUpperCase();
+
+    document.getElementById('herschel-section').style.display = (name === 'Libra') ? '' : 'none';
+
+    resetTimeToNow();
+  }
+
+  document.getElementById('const-prev').addEventListener('click', function () {
+    currentIndex = (currentIndex - 1 + ZODIAC_ORDER.length) % ZODIAC_ORDER.length;
+    loadConstellation(ZODIAC_ORDER[currentIndex]);
+  });
+  document.getElementById('const-next').addEventListener('click', function () {
+    currentIndex = (currentIndex + 1) % ZODIAC_ORDER.length;
+    loadConstellation(ZODIAC_ORDER[currentIndex]);
+  });
+
+  // ============================================================
+  // 8. Boot
+  // ============================================================
+  initViewer3DScene();
+  loadConstellation(ZODIAC_ORDER[currentIndex]);
 </script>
 
 </body>

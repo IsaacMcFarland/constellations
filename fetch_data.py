@@ -50,8 +50,7 @@ def fetch_candidates(ra_min, ra_max, dec_min, dec_max):
     FROM basic
     JOIN flux AS fluxv ON fluxv.oidref = basic.oid AND fluxv.filter = 'V'
     LEFT JOIN flux AS fluxb ON fluxb.oidref = basic.oid AND fluxb.filter = 'B'
-    WHERE basic.otype = 'Star'
-      AND basic.plx_value IS NOT NULL
+    WHERE basic.plx_value IS NOT NULL
       AND basic.ra BETWEEN {ra_min} AND {ra_max}
       AND basic.dec BETWEEN {dec_min} AND {dec_max}
     ORDER BY vmag ASC
